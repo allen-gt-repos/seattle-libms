@@ -1,4 +1,4 @@
-package com.util;
+package gt.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 
-public class DButil {
+public class DBUtil {
 
 	// Set database login info	
 	public static final String URL = "jdbc:mysql://localhost:3306/lib_db?useSSL=false";
@@ -42,7 +42,7 @@ public class DButil {
 	
 	public static void main(String[] args) throws Exception {
 		
-		DButil dbu = new DButil();
+		DBUtil dbu = new DBUtil();
 		
 		try {
 			Connection conn = dbu.getCon();
