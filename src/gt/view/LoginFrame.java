@@ -65,19 +65,19 @@ public class LoginFrame extends JFrame {
 		setFont(new Font("Dialog", Font.BOLD, 14));
 		setTitle("Seattle Public Library Management System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 441, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.highlight"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JLabel lblUsername = new JLabel("Username: ");
-		lblUsername.setBounds(159, 35, 104, 23);
+		lblUsername.setBounds(159, 35, 161, 23);
 		lblUsername.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblUsername.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/userName.png")));
 		
 		JLabel lblPassword = new JLabel("Password: ");
-		lblPassword.setBounds(159, 94, 100, 23);
+		lblPassword.setBounds(159, 94, 161, 23);
 		lblPassword.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblPassword.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/password.png")));
 		
@@ -87,17 +87,17 @@ public class LoginFrame extends JFrame {
 				loginActionPerformed(e);
 			}
 		});
-		btnSignIn.setBounds(190, 158, 105, 33);
+		btnSignIn.setBounds(190, 158, 119, 33);
 		btnSignIn.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/login.png")));
 		btnSignIn.setFont(new Font("Dialog", Font.BOLD, 15));
 		
 		JButton btnNewButton = new JButton("Create New Account");
-		btnNewButton.setBounds(292, 228, 131, 25);
+		btnNewButton.setBounds(274, 228, 149, 25);
 		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 10));
 		
 		JLabel lblNewToSeattle = new JLabel("New to Seattle Public Library?");
 		lblNewToSeattle.setFont(new Font("Dialog", Font.PLAIN, 13));
-		lblNewToSeattle.setBounds(83, 231, 212, 18);
+		lblNewToSeattle.setBounds(67, 230, 212, 18);
 		contentPane.setLayout(null);
 		contentPane.add(btnNewButton);
 		contentPane.add(lblNewToSeattle);

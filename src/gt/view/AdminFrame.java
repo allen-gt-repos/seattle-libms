@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
 
 public class AdminFrame extends JFrame {
 
@@ -48,7 +49,7 @@ public class AdminFrame extends JFrame {
 		setFont(new Font("Dialog", Font.BOLD, 14));
 		setTitle("SPL Admin Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 621, 354);
+		setBounds(100, 100, 720, 480);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -119,16 +120,17 @@ public class AdminFrame extends JFrame {
 		mntmLogOut.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/reset.png")));
 		mnAboutUs.add(mntmLogOut);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGap(0, 622, Short.MAX_VALUE)
+				.addGap(0, 493, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 378, Short.MAX_VALUE)
+				.addGap(0, 293, Short.MAX_VALUE)
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
@@ -145,7 +147,6 @@ public class AdminFrame extends JFrame {
 		loginFrm.setLocationRelativeTo(null);
 		loginFrm.setVisible(true);
 	}
-
 }
 
 
