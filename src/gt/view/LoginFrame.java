@@ -46,6 +46,7 @@ public class LoginFrame extends JFrame {
 			public void run() {
 				try {
 					LoginFrame frame = new LoginFrame();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -118,6 +119,7 @@ public class LoginFrame extends JFrame {
 		label.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/spl3.png")));
 		label.setBounds(12, 0, 131, 146);
 		contentPane.add(label);
+		
 	}
 
 /*
@@ -148,7 +150,13 @@ public class LoginFrame extends JFrame {
 			User resultusUser = userDao.login(con,user);
 			if(resultusUser!=null)
 			{
-				JOptionPane.showMessageDialog(null, "Successfully login!");
+//				JOptionPane.showMessageDialog(null, "Successfully login!");
+				dispose();
+				// GO into the Administration page
+				AdminFrame adminFrm = new AdminFrame();
+				adminFrm.setLocationRelativeTo(null);
+				adminFrm.setVisible(true);
+				
 			}
 			else 
 			{
