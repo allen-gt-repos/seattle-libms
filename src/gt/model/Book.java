@@ -16,6 +16,29 @@ public class Book {
 	private int locationId;
 	private int availableCount;
 	
+	
+	
+	public Book() {
+		super();
+		// TODO 自动生成的构造函数存根
+	}
+	
+	
+	public Book(long bookId, String title, String author, String publisher, String isbn, String pubYear, String subject,
+			int locationId, int availableCount) {
+		super();
+		this.bookId = bookId;
+		this.title = title;
+		this.author = author;
+		this.publisher = publisher;
+		this.isbn = isbn;
+		this.pubYear = pubYear;
+		this.subject = subject;
+		this.locationId = locationId;
+		this.availableCount = availableCount;
+	}
+
+
 	/*
 	 * get data and set data 
 	 */

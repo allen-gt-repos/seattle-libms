@@ -1,30 +1,27 @@
 package gt.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JMenu;
-import java.awt.Font;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JDesktopPane;
-import javax.swing.UIManager;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
 
 public class AdminFrame extends JFrame {
 
 	private JPanel contentPane;
-
+	JDesktopPane desktopPane = new JDesktopPane();
 	/**
 	 * Launch the application.
 	 */
@@ -58,6 +55,12 @@ public class AdminFrame extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmAddNewBook = new JMenuItem("Add New Book");
+		mntmAddNewBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewBookActionPerformed(e);
+				
+			}
+		});
 		mntmAddNewBook.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/add.png")));
 		mnNewMenu.add(mntmAddNewBook);
 		
@@ -125,16 +128,38 @@ public class AdminFrame extends JFrame {
 		setContentPane(contentPane);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGap(0, 493, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 696, GroupLayout.PREFERRED_SIZE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 293, Short.MAX_VALUE)
+				.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
 		);
+		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
+		gl_desktopPane.setHorizontalGroup(
+			gl_desktopPane.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 696, Short.MAX_VALUE)
+		);
+		gl_desktopPane.setVerticalGroup(
+			gl_desktopPane.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 410, Short.MAX_VALUE)
+		);
+		desktopPane.setLayout(gl_desktopPane);
 		contentPane.setLayout(gl_contentPane);
 	}
-	
+	/*
+	 * Handle the create new book button
+	 */
+	protected void addNewBookActionPerformed(ActionEvent e) {
+		
+		AddNewBookFrame addBookFrm = new AddNewBookFrame();
+		addBookFrm.setLocation(8,8); //set relative location to desktop panel
+		addBookFrm.setVisible(true);
+		desktopPane.add(addBookFrm);
+		
+		
+	}
+
 	/*
 	 * handle the log out button
 	 * @param e

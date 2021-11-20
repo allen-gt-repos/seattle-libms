@@ -15,6 +15,9 @@ import gt.model.User;
  */
 public class UserDao {
 	
+	/*
+	 * User login function
+	 */
 	public User login(Connection con, User loginUser) throws Exception{
 		
 		User resultUser = null;
@@ -40,4 +43,19 @@ public class UserDao {
 	}
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
