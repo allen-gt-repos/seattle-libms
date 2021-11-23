@@ -32,6 +32,17 @@ public class User {
 		this.password = password;
 	}
 
+	
+	public User(String userId, String password, String name, String email, int userType, int borrowedCount) {
+		super();
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.userType = userType;
+		this.borrowedCount = borrowedCount;
+	}
+	
 	/*
 	 * get data and set data 
 	 */

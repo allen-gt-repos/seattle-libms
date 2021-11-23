@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import gt.model.User;
+import gt.util.StringUtil;
 
 /**
  * @author Wang, Yinuo
@@ -42,7 +43,25 @@ public class UserDao {
 		
 	}
 	
-
+	/*
+	 * Add new user account function
+	 */
+	public int addNewUser(Connection con, User newUser) throws Exception{
+		
+		String sql = "insert into user "
+				+ "(User_id, Password, Name, User_type, Email, Borrowed_count) values(?,?,?,?,?,?)";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1,newUser.getUserId());
+		pstate.setString(2, newUser.getPassword());
+		pstate.setString(3,newUser.getName());
+		pstate.setInt(4, newUser.getUserType());
+		pstate.setString(5, newUser.getEmail());
+		pstate.setInt(6, newUser.getBorrowedCount());
+		
+		return pstate.executeUpdate();
+	}
 	
 	
 	

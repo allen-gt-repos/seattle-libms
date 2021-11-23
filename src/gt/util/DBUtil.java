@@ -8,11 +8,11 @@ import java.sql.Statement;
 
 public class DBUtil {
 
-	// Set database login info	
-	public static final String URL = "jdbc:mysql://localhost:3306/lib_db?useSSL=false&serverTimezone = GMT";
+	// Set database login info	&serverTimezone = GMT
+	public static final String URL = "jdbc:mysql://localhost:3306/lib_db?useSSL=false";
 	public static final String USER = "root";
-//	public static final String PASSWORD = "666";
-	public static final String PASSWORD = "980502wyn";
+	public static final String PASSWORD = "666";
+//	public static final String PASSWORD = "980502wyn";
 	
 	public void dbDemo(Connection conn) throws Exception {
 		// query the database

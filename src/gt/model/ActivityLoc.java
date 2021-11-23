@@ -1,8 +1,17 @@
 package gt.model;
 
-public class Location {
+import java.sql.Date;
+import java.sql.Time;
+
+public class ActivityLoc {
 	
-	private int LocationId;
+	
+	private String activityName;
+	private String organizer;
+	private Date beginDate;
+	private Time beginTime;
+	private Time endTime;
+
 	private int Floor;
 	private String HallName;
 	private String HallCoord;
@@ -13,12 +22,36 @@ public class Location {
 	private int Layer;
 	
 	
-	// get and set class member
-	public int getLocationId() {
-		return LocationId;
+	// getters and setters
+	public String getActivityName() {
+		return activityName;
 	}
-	public void setLocationId(int locationId) {
-		LocationId = locationId;
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+	public String getOrganizer() {
+		return organizer;
+	}
+	public void setOrganizer(String organizer) {
+		this.organizer = organizer;
+	}
+	public Date getBeginDate() {
+		return beginDate;
+	}
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+	public Time getBeginTime() {
+		return beginTime;
+	}
+	public void setBeginTime(Time beginTime) {
+		this.beginTime = beginTime;
+	}
+	public Time getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Time endTime) {
+		this.endTime = endTime;
 	}
 	public int getFloor() {
 		return Floor;
@@ -62,9 +95,7 @@ public class Location {
 	public void setLayer(int layer) {
 		Layer = layer;
 	}
-
 	
 	
-
 
 }

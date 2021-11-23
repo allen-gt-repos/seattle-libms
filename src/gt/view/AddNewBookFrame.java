@@ -17,6 +17,7 @@ import gt.dao.BookDao;
 import gt.model.Book;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
+import javax.swing.SwingConstants;
 
 public class AddNewBookFrame extends JInternalFrame {
 	private JTextField TitleTxt;
@@ -56,75 +57,84 @@ public class AddNewBookFrame extends JInternalFrame {
 		setBounds(100, 100, 680, 400);
 		
 		JLabel lblNewLabel = new JLabel("Title*:");
-		lblNewLabel.setBounds(35, 51, 58, 15);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel.setBounds(35, 51, 77, 15);
 		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_1 = new JLabel("Author*:");
-		lblNewLabel_1.setBounds(35, 89, 58, 15);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setBounds(35, 89, 77, 15);
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_2 = new JLabel("ISBN*:");
-		lblNewLabel_2.setBounds(35, 132, 58, 15);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_2.setBounds(35, 132, 77, 15);
 		lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		TitleTxt = new JTextField();
-		TitleTxt.setBounds(92, 48, 193, 21);
+		TitleTxt.setBounds(102, 48, 183, 21);
 		TitleTxt.setColumns(10);
 		
 		AuthorTxt = new JTextField();
-		AuthorTxt.setBounds(92, 86, 193, 21);
+		AuthorTxt.setBounds(102, 86, 183, 21);
 		AuthorTxt.setColumns(10);
 		
 		ISBNTxt = new JTextField();
-		ISBNTxt.setBounds(92, 129, 193, 21);
+		ISBNTxt.setBounds(102, 129, 183, 21);
 		ISBNTxt.setColumns(10);
 		
 		PublisherTxt = new JTextField();
-		PublisherTxt.setBounds(450, 48, 193, 21);
+		PublisherTxt.setBounds(471, 48, 172, 21);
 		PublisherTxt.setColumns(10);
 		
 		PubYearTxt = new JTextField();
-		PubYearTxt.setBounds(450, 86, 193, 21);
+		PubYearTxt.setBounds(471, 86, 172, 21);
 		PubYearTxt.setColumns(10);
 		
 		CountTxt = new JTextField();
-		CountTxt.setBounds(450, 129, 193, 21);
+		CountTxt.setBounds(471, 129, 172, 21);
 		CountTxt.setColumns(10);
 		
 		JLabel lblPublisher = new JLabel("Publisher:");
-		lblPublisher.setBounds(343, 51, 58, 15);
+		lblPublisher.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPublisher.setBounds(343, 51, 130, 15);
 		lblPublisher.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblPublicationYear = new JLabel("Publication Year:");
-		lblPublicationYear.setBounds(343, 89, 106, 15);
+		lblPublicationYear.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPublicationYear.setBounds(343, 89, 130, 15);
 		lblPublicationYear.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblCount = new JLabel("Total Count*:");
-		lblCount.setBounds(343, 132, 90, 15);
+		lblCount.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCount.setBounds(343, 132, 130, 15);
 		lblCount.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Book ID*:");
-		lblNewLabel_2_1.setBounds(35, 178, 58, 15);
+		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_2_1.setBounds(35, 178, 77, 15);
 		lblNewLabel_2_1.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Location*:");
-		lblNewLabel_2_1_1.setBounds(343, 178, 58, 15);
+		lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_2_1_1.setBounds(343, 178, 130, 15);
 		lblNewLabel_2_1_1.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		BookIDTxt = new JTextField();
-		BookIDTxt.setBounds(92, 175, 193, 21);
+		BookIDTxt.setBounds(102, 175, 183, 21);
 		BookIDTxt.setColumns(10);
 		
 		LocationTxt = new JTextField();
-		LocationTxt.setBounds(450, 175, 193, 21);
+		LocationTxt.setBounds(471, 175, 172, 21);
 		LocationTxt.setColumns(10);
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("Subjects:");
-		lblNewLabel_2_1_2.setBounds(35, 222, 58, 15);
+		lblNewLabel_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_2_1_2.setBounds(35, 222, 77, 15);
 		lblNewLabel_2_1_2.setFont(new Font("Dialog", Font.BOLD, 12));
 		
 		SubjectTxt = new JTextField();
-		SubjectTxt.setBounds(92, 219, 551, 21);
+		SubjectTxt.setBounds(102, 219, 541, 21);
 		SubjectTxt.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Submit");
@@ -142,7 +152,7 @@ public class AddNewBookFrame extends JInternalFrame {
 		btnReset.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				resetActionPreformed(e);
+				resetActionPerformed(e);
 			}
 		});
 		
@@ -184,7 +194,7 @@ public class AddNewBookFrame extends JInternalFrame {
 	 * Handle the submit button event
 	 */
 	protected void submitAdditionActionPerformed(ActionEvent e) {
-		// 
+		 
 		int confirmResult = JOptionPane.showConfirmDialog(null, "Confirm to submit?");
 		if(confirmResult == 0)
 		{
@@ -245,23 +255,19 @@ public class AddNewBookFrame extends JInternalFrame {
 				} catch (Exception e1) {
 					
 					e1.printStackTrace();
+					
 				}finally {
 					try {
+						
 						dbUtil.closeCon(con);
+						
 					} catch (Exception e1) {
-						//
+					
 						e1.printStackTrace();
 					}
-					
 				}
-				
 			}
-		
-			
-		
 		}
-		
-		
 	}
 
 	/*
@@ -276,7 +282,7 @@ public class AddNewBookFrame extends JInternalFrame {
 	/*
 	 * handle the reset button event 
 	 */
-	private void resetActionPreformed(ActionEvent evt) {
+	private void resetActionPerformed(ActionEvent evt) {
 		// reset all blanks
 		this.resetValue();
 	}

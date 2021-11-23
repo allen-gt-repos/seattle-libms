@@ -1,34 +1,26 @@
 package gt.view;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import gt.dao.UserDao;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Window.Type;
-import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.UIManager;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.Button;
-import javax.swing.JTextField;
 
 public class LoginFrame extends JFrame {
 
@@ -59,6 +51,7 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		
 		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/about.png")));
 		setResizable(false);
@@ -92,8 +85,13 @@ public class LoginFrame extends JFrame {
 		btnSignIn.setFont(new Font("Dialog", Font.BOLD, 15));
 		
 		JButton btnNewButton = new JButton("Create New Account");
-		btnNewButton.setBounds(274, 228, 149, 25);
-		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				registerActionPerformed(e);
+			}
+		});
+		btnNewButton.setBounds(270, 225, 150, 30);
+		btnNewButton.setFont(new Font("Ubuntu", Font.BOLD, 11));
 		
 		JLabel lblNewToSeattle = new JLabel("New to Seattle Public Library?");
 		lblNewToSeattle.setFont(new Font("Dialog", Font.PLAIN, 13));
@@ -121,10 +119,20 @@ public class LoginFrame extends JFrame {
 		contentPane.add(label);
 		
 	}
+	/*
+	 * handle the create new account button event 
+	 */
+	private void registerActionPerformed(ActionEvent e) {
+		
+		dispose();
+		RegisterFrame registerFrm = new RegisterFrame();
+		registerFrm.setLocationRelativeTo(null);
+		registerFrm.setVisible(true);
+	}
 
-/*
- * handle the login button event
- */
+	/*
+	 * handle the login button event
+	 */
 	private void loginActionPerformed(ActionEvent e) {
 		
 		// get input
@@ -152,23 +160,36 @@ public class LoginFrame extends JFrame {
 			{
 //				JOptionPane.showMessageDialog(null, "Successfully login!");
 				dispose();
-				// GO into the Administration page
-				AdminFrame adminFrm = new AdminFrame();
-				adminFrm.setLocationRelativeTo(null);
-				adminFrm.setVisible(true);
-				
+				if(resultusUser.getUserType() == 2){
+									
+					// GO into the Administration page
+					AdminFrame adminFrm = new AdminFrame();
+					adminFrm.setLocationRelativeTo(null);
+					adminFrm.setVisible(true);
+				}
+				else if (resultusUser.getUserType() == 1) {
+					
+					// GO into the Reader page
+					ReaderFrame readerFrm = new ReaderFrame();
+					readerFrm.setLocationRelativeTo(null);
+					readerFrm.setVisible(true);
+					
+				}
 			}
 			else 
 			{
 				JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
-
 			}
 		} catch (Exception e1) {
 			
 			JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
-			e1.printStackTrace();
+//			e1.printStackTrace();
 		}
 	}
+
+	
+	
+	
 	
 	
 	

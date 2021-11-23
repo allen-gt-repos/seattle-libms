@@ -1,10 +1,7 @@
 package gt.model;
 
-/**
- * @author Wang, Yinuo
- * User entity relation model
- */
-public class Book {
+public class BookLoc {
+
 	
 	private long bookId;
 	private String title;
@@ -13,35 +10,21 @@ public class Book {
 	private String isbn;
 	private String pubYear;
 	private String subject;
-	private int locationId;
+//	private int locationId;
 	private int availableCount;
 	
+//	private int LocationId;
+	private int Floor;
+	private String HallName;
+	private String HallCoord;
+	
+	private int Bookshelf;
+	private String BookShelfCoord;
+	private int Column;
+	private int Layer;
 	
 	
-	public Book() {
-		super();
-		
-	}
-	
-	
-	public Book(long bookId, String title, String author, String publisher, String isbn, String pubYear, String subject,
-			int locationId, int availableCount) {
-		super();
-		this.bookId = bookId;
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-		this.isbn = isbn;
-		this.pubYear = pubYear;
-		this.subject = subject;
-		this.locationId = locationId;
-		this.availableCount = availableCount;
-	}
-
-
-	/*
-	 * get data and set data 
-	 */
+	// getter and setters
 	public long getBookId() {
 		return bookId;
 	}
@@ -84,19 +67,54 @@ public class Book {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public int getLocationId() {
-		return locationId;
-	}
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
-	}
 	public int getAvailableCount() {
 		return availableCount;
 	}
 	public void setAvailableCount(int availableCount) {
 		this.availableCount = availableCount;
 	}
+	public int getFloor() {
+		return Floor;
+	}
+	public void setFloor(int floor) {
+		Floor = floor;
+	}
+	public String getHallName() {
+		return HallName;
+	}
+	public void setHallName(String hallName) {
+		HallName = hallName;
+	}
+	public String getHallCoord() {
+		return HallCoord;
+	}
+	public void setHallCoord(String hallCoord) {
+		HallCoord = hallCoord;
+	}
+	public int getBookshelf() {
+		return Bookshelf;
+	}
+	public void setBookshelf(int bookshelf) {
+		Bookshelf = bookshelf;
+	}
+	public String getBookShelfCoord() {
+		return BookShelfCoord;
+	}
+	public void setBookShelfCoord(String bookShelfCoord) {
+		BookShelfCoord = bookShelfCoord;
+	}
+	public int getColumn() {
+		return Column;
+	}
+	public void setColumn(int column) {
+		Column = column;
+	}
+	public int getLayer() {
+		return Layer;
+	}
+	public void setLayer(int layer) {
+		Layer = layer;
+	}
 	
 	
-
 }

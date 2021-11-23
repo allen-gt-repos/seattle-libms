@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDesktopPane;
+import java.awt.Toolkit;
+
 
 public class AdminFrame extends JFrame {
 
@@ -43,10 +45,12 @@ public class AdminFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminFrame() {
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminFrame.class.getResource("/image/spl3.png")));
 		setFont(new Font("Dialog", Font.BOLD, 14));
 		setTitle("SPL Admin Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 720, 480);
+		setBounds(100, 100, 710, 480);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -72,6 +76,11 @@ public class AdminFrame extends JFrame {
 		menuBar.add(mnActivityManage);
 		
 		JMenuItem mntmCreateNewActivity = new JMenuItem("Create New Activity");
+		mntmCreateNewActivity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewActivityActionPerformed(e);
+			}
+		});
 		mntmCreateNewActivity.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/add.png")));
 		mnActivityManage.add(mntmCreateNewActivity);
 		
@@ -87,6 +96,11 @@ public class AdminFrame extends JFrame {
 		mnUserManager.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Create Account");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewReaderActionPerformed(e);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmEditExistingAccount = new JMenuItem("Edit Account");
@@ -97,6 +111,11 @@ public class AdminFrame extends JFrame {
 		mnUserManager.add(mnNewMenu_4);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Create Account");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewAdminActionPerformed(e);
+			}
+		});
 		mnNewMenu_4.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Edit Account");
@@ -129,11 +148,11 @@ public class AdminFrame extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 696, GroupLayout.PREFERRED_SIZE)
+				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
+				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
 		);
 		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
 		gl_desktopPane.setHorizontalGroup(
@@ -147,13 +166,46 @@ public class AdminFrame extends JFrame {
 		desktopPane.setLayout(gl_desktopPane);
 		contentPane.setLayout(gl_contentPane);
 	}
+
+	protected void addNewAdminActionPerformed(ActionEvent e) {
+		
+		AddNewUserFrame addUserFrm = new AddNewUserFrame(2);
+		addUserFrm.setLocation(10,10);
+		addUserFrm.setVisible(true);
+		desktopPane.add(addUserFrm);
+		
+	}
+
+	/*
+	 * Handle the create new activity button
+	 */	
+	protected void addNewActivityActionPerformed(ActionEvent e) {
+		
+		AddNewActFrame addNewActFrm = new AddNewActFrame();
+		addNewActFrm.setLocation(10,10);
+		addNewActFrm.setVisible(true);
+		desktopPane.add(addNewActFrm);
+		
+	}
+
+	/*
+	 * Handle the create new reader button
+	 */
+	protected void addNewReaderActionPerformed(ActionEvent e) {
+		
+		AddNewUserFrame addUserFrm = new AddNewUserFrame(1);
+		addUserFrm.setLocation(10,10);
+		addUserFrm.setVisible(true);
+		desktopPane.add(addUserFrm);
+	}
+
 	/*
 	 * Handle the create new book button
 	 */
 	protected void addNewBookActionPerformed(ActionEvent e) {
 		
 		AddNewBookFrame addBookFrm = new AddNewBookFrame();
-		addBookFrm.setLocation(8,8); //set relative location to desktop panel
+		addBookFrm.setLocation(10,10); //set relative location to desktop panel
 		addBookFrm.setVisible(true);
 		desktopPane.add(addBookFrm);
 		
