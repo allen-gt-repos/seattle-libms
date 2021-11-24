@@ -53,7 +53,7 @@ public class LoginFrame extends JFrame {
 	public LoginFrame() {
 		
 		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/about.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/spl.png")));
 		setResizable(false);
 		setFont(new Font("Dialog", Font.BOLD, 14));
 		setTitle("Seattle Public Library Management System");
@@ -163,14 +163,14 @@ public class LoginFrame extends JFrame {
 				if(resultusUser.getUserType() == 2){
 									
 					// GO into the Administration page
-					AdminFrame adminFrm = new AdminFrame();
+					AdminFrame adminFrm = new AdminFrame(resultusUser);
 					adminFrm.setLocationRelativeTo(null);
 					adminFrm.setVisible(true);
 				}
 				else if (resultusUser.getUserType() == 1) {
 					
 					// GO into the Reader page
-					ReaderFrame readerFrm = new ReaderFrame();
+					ReaderFrame readerFrm = new ReaderFrame(resultusUser);
 					readerFrm.setLocationRelativeTo(null);
 					readerFrm.setVisible(true);
 					
@@ -179,17 +179,28 @@ public class LoginFrame extends JFrame {
 			else 
 			{
 				JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
+				userNameTxt.setText("");
+				passwordTxt.setText("");
 			}
 		} catch (Exception e1) {
 			
 			JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
 //			e1.printStackTrace();
+		}finally {
+			
+			try {
+				dbUtil.closeCon(con);
+				dispose();
+			} catch (Exception e1) {
+				
+				e1.printStackTrace();
+			}
 		}
 	}
 
 	
 	
-	
+
 	
 	
 	

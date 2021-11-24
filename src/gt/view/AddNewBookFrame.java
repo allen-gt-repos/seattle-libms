@@ -18,6 +18,7 @@ import gt.model.Book;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class AddNewBookFrame extends JInternalFrame {
 	private JTextField TitleTxt;
@@ -52,6 +53,7 @@ public class AddNewBookFrame extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public AddNewBookFrame() {
+		getContentPane().setBackground(Color.WHITE);
 		setNormalBounds(new Rectangle(9, 9, 0, 0));
 		getContentPane().setFont(new Font("Dialog", Font.BOLD, 12));
 		setBounds(100, 100, 680, 400);

@@ -38,9 +38,11 @@ import gt.model.Activity;
 import gt.model.ActivityLoc;
 import gt.model.Book;
 import gt.model.BookLoc;
+import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
 import java.awt.event.MouseAdapter;
+import java.awt.Toolkit;
 
 
 public class ReaderFrame extends JFrame {
@@ -66,7 +68,7 @@ public class ReaderFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ReaderFrame frame = new ReaderFrame();
+					ReaderFrame frame = new ReaderFrame(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +80,8 @@ public class ReaderFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ReaderFrame() {
+	public ReaderFrame(User currentUser) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ReaderFrame.class.getResource("/image/spl3.png")));
 		setTitle("Seattle Public Library Reader System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 710, 500);
@@ -87,9 +90,16 @@ public class ReaderFrame extends JFrame {
 		
 		// create panel
 		buildSearchPanel();
-		buildInfoPanel();
+		buildInfoPanel(currentUser);
 		
 		tabPane.add("Search",search);
+		tabPane.add("Account Info",info);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/spl3.png")));
+		label.setBounds(536, 56, 157, 157);
+		info.add(label);
+		tabPane.setSelectedIndex(0); 
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(48, 164, 613, 247);
@@ -129,9 +139,6 @@ public class ReaderFrame extends JFrame {
 		ResultTable.setDefaultRenderer(Object.class, dtcr);
 		scrollPane.setViewportView(ResultTable);
 		
-
-		tabPane.add("Account Info",info);
-		tabPane.setSelectedIndex(0); 
 
 		// add tab panel to JFrame
 		getContentPane().add(tabPane);
@@ -235,30 +242,40 @@ public class ReaderFrame extends JFrame {
 	 * 
 	 * The Account Info page
 	 */
-	private void buildInfoPanel() {
+	private void buildInfoPanel(User user) {
 		
 		info = new JPanel();
+		info.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+			}
+		});
 		info.setBackground(new Color(255, 255, 255));
 		info.setLayout(null);
 		
-		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(37, 67, 125, 15);
+		JLabel lblUsername = new JLabel();
+		lblUsername.setBounds(106, 66, 423, 15);
+		lblUsername.setText("Username: " + user.getUserId());
 		info.add(lblUsername);
 		
-		JLabel lblReaderName = new JLabel("Reader Name:");
-		lblReaderName.setBounds(37, 108, 125, 15);
+		JLabel lblReaderName = new JLabel();
+		lblReaderName.setBounds(106, 110, 423, 15);
+		lblReaderName.setText("Reader Name: " + user.getName());
 		info.add(lblReaderName);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(37, 161, 125, 15);
+		JLabel lblEmail = new JLabel();
+		lblEmail.setBounds(106, 160, 423, 15);
+		lblEmail.setText("E-mail: " + user.getEmail());
 		info.add(lblEmail);
 		
-		JLabel lblAvailableQuantity = new JLabel("Available Quantity:");
-		lblAvailableQuantity.setBounds(37, 258, 156, 15);
+		JLabel lblAvailableQuantity = new JLabel();
+		lblAvailableQuantity.setBounds(106, 257, 423, 15);
+		lblAvailableQuantity.setText("Available Quantity: " + String.valueOf(10 - user.getBorrowedCount()));
 		info.add(lblAvailableQuantity);
 		
-		JLabel lblEmail_1_1 = new JLabel("Borrowed Quantity:");
-		lblEmail_1_1.setBounds(37, 209, 156, 15);
+		JLabel lblEmail_1_1 = new JLabel();
+		lblEmail_1_1.setBounds(106, 208, 423, 15);
+		lblEmail_1_1.setText( "Borrowed Quantity: " + String.valueOf(user.getBorrowedCount()));
 		info.add(lblEmail_1_1);
 		
 		JToolBar toolBar = new JToolBar();
@@ -270,7 +287,9 @@ public class ReaderFrame extends JFrame {
 		btnNewButton_1.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/edit.png")));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateInfoActionPerformed(e);
+				VerifyAccountDialog verifyAccountDialog = new VerifyAccountDialog(user);
+				verifyAccountDialog.setLocationRelativeTo(null);
+				verifyAccountDialog.setVisible(true);
 			}
 		});
 		btnNewButton_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -280,7 +299,12 @@ public class ReaderFrame extends JFrame {
 		btnNewButton.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/password.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changePwdActionPerformed(e);
+			
+				NewPasswordFrame newPasswordFrm = new NewPasswordFrame(user);
+				newPasswordFrm.setLocationRelativeTo(null);
+				newPasswordFrm.setVisible(true);
+					
+				
 			}
 		});
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -294,16 +318,8 @@ public class ReaderFrame extends JFrame {
 			}
 		});
 	}
-	
-	protected void updateInfoActionPerformed(ActionEvent e) {
-		// TODO 自动生成的方法存根
-		
-	}
 
-	protected void changePwdActionPerformed(ActionEvent e) {
-		// TODO 自动生成的方法存根
-		
-	}
+
 
 	/*
 	 * Handle the logout event

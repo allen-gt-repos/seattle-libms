@@ -72,7 +72,10 @@ public class BookDao {
 		return pstate.executeQuery();
 		
 	}
-	
+	/*
+	 * Handle the get book info details event
+	 * 
+	 */
 	public BookLoc getBookInfo(Connection con, String TitleStr) throws Exception{
 		
 		BookLoc resultBookLoc = null;
@@ -123,14 +126,15 @@ public class BookDao {
 	 */
 	public int update(Connection con, Book book) throws Exception{
 		
-		String sql = "update book where Book_id=?, Title=?, Author=?, Isbn=?, Subject=?, Location_id=?";
+		String sql = "update book set Title=?, Author=?, Isbn=?, Subject=?, Location_id=? where Book_id=?";
 		PreparedStatement pstate = con.prepareStatement(sql);
-		pstate.setString(1, String.valueOf(book.getBookId()));
-		pstate.setString(2, book.getTitle());
-		pstate.setString(3, book.getAuthor());
-		pstate.setString(4, book.getIsbn());
-		pstate.setString(5, book.getSubject());
-		pstate.setString(6, String.valueOf(book.getLocationId()));
+		
+		pstate.setString(1, book.getTitle());
+		pstate.setString(2, book.getAuthor());
+		pstate.setString(3, book.getIsbn());
+		pstate.setString(4, book.getSubject());
+		pstate.setString(5, String.valueOf(book.getLocationId()));
+		pstate.setString(6, String.valueOf(book.getBookId()));
 		
 		return pstate.executeUpdate();
 	}

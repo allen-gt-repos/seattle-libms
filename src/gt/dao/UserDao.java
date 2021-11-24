@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.mysql.cj.core.exceptions.ClosedOnExpiredPasswordException;
+
 import gt.model.User;
 import gt.util.StringUtil;
 
@@ -63,12 +65,56 @@ public class UserDao {
 		return pstate.executeUpdate();
 	}
 	
+	/*
+	 * 
+	 * update the user password
+	 */
+	public int changePassword(Connection con, User user, String newPwd) throws Exception{
+		
+		String sql = "update user set Password=? where User_id=?";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, newPwd);
+		pstate.setString(2, user.getUserId());
+		
+		return pstate.executeUpdate();
+		
+	}
 	
 	
+	public int updateInfo(Connection con, User user, String userIdStr) throws Exception{
+		
+		String sql = "update user set User_id=?, Email=?, Name=? where User_id=?";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(4, userIdStr);
+		pstate.setString(1, user.getUserId());
+		pstate.setString(2, user.getEmail());
+		pstate.setString(3, user.getName());
+		
+		return pstate.executeUpdate();
+
+	}
 	
-	
-	
-	
+	public boolean searchExistedUsername(Connection con, String userIdStr) throws Exception{
+		
+		String sql = "select * from user where User_id=?";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, userIdStr);
+		
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
 	
 	
 	

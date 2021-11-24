@@ -16,6 +16,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import gt.model.User;
+
 import javax.swing.JDesktopPane;
 import java.awt.Toolkit;
 
@@ -31,7 +34,7 @@ public class AdminFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminFrame frame = new AdminFrame();
+					AdminFrame frame = new AdminFrame(null);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -44,7 +47,7 @@ public class AdminFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdminFrame() {
+	public AdminFrame(User user) {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminFrame.class.getResource("/image/spl3.png")));
 		setFont(new Font("Dialog", Font.BOLD, 14));
@@ -125,6 +128,14 @@ public class AdminFrame extends JFrame {
 		menuBar.add(mnAboutUs);
 		
 		JMenuItem mntmAddress = new JMenuItem("Account Info");
+		mntmAddress.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminInfoFrame adminInfoFrm = new AdminInfoFrame(user);
+				adminInfoFrm.setLocation(10,10);
+				adminInfoFrm.setVisible(true);
+				desktopPane.add(adminInfoFrm);
+			}
+		});
 		mntmAddress.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/me.png")));
 		mnAboutUs.add(mntmAddress);
 		
@@ -167,7 +178,10 @@ public class AdminFrame extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	protected void addNewAdminActionPerformed(ActionEvent e) {
+	/*
+	 * Handle the add new administrator event
+	 */
+	private void addNewAdminActionPerformed(ActionEvent e) {
 		
 		AddNewUserFrame addUserFrm = new AddNewUserFrame(2);
 		addUserFrm.setLocation(10,10);
@@ -179,7 +193,7 @@ public class AdminFrame extends JFrame {
 	/*
 	 * Handle the create new activity button
 	 */	
-	protected void addNewActivityActionPerformed(ActionEvent e) {
+	private void addNewActivityActionPerformed(ActionEvent e) {
 		
 		AddNewActFrame addNewActFrm = new AddNewActFrame();
 		addNewActFrm.setLocation(10,10);
@@ -191,7 +205,7 @@ public class AdminFrame extends JFrame {
 	/*
 	 * Handle the create new reader button
 	 */
-	protected void addNewReaderActionPerformed(ActionEvent e) {
+	private void addNewReaderActionPerformed(ActionEvent e) {
 		
 		AddNewUserFrame addUserFrm = new AddNewUserFrame(1);
 		addUserFrm.setLocation(10,10);
@@ -202,7 +216,7 @@ public class AdminFrame extends JFrame {
 	/*
 	 * Handle the create new book button
 	 */
-	protected void addNewBookActionPerformed(ActionEvent e) {
+	private void addNewBookActionPerformed(ActionEvent e) {
 		
 		AddNewBookFrame addBookFrm = new AddNewBookFrame();
 		addBookFrm.setLocation(10,10); //set relative location to desktop panel
