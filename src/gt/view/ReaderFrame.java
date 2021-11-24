@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.AbstractCellEditor;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,8 +34,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import org.w3c.dom.events.MouseEvent;
-
 import gt.dao.ActivityDao;
 import gt.dao.BookDao;
 import gt.model.Activity;
@@ -41,8 +43,7 @@ import gt.model.BookLoc;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-import java.awt.event.MouseAdapter;
-import java.awt.Toolkit;
+import javax.swing.UIManager;
 
 
 public class ReaderFrame extends JFrame {
@@ -96,9 +97,17 @@ public class ReaderFrame extends JFrame {
 		tabPane.add("Account Info",info);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/spl3.png")));
-		label.setBounds(536, 56, 157, 157);
+		label.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/spl.png")));
+		label.setBounds(547, 286, 157, 157);
 		info.add(label);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setFont(new Font("Lato Black", Font.BOLD, 17));
+		label_2.setForeground(Color.WHITE);
+		label_2.setBackground(UIManager.getColor("TextArea.background"));
+		label_2.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/Picture1.png")));
+		label_2.setBounds(0, 24, 705, 419);
+		info.add(label_2);
 		tabPane.setSelectedIndex(0); 
 		
 		scrollPane = new JScrollPane();
@@ -139,6 +148,12 @@ public class ReaderFrame extends JFrame {
 		ResultTable.setDefaultRenderer(Object.class, dtcr);
 		scrollPane.setViewportView(ResultTable);
 		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/Picture1.png")));
+		
+		label_1.setBounds(0, 0, 705, 443);
+		search.add(label_1);
+		
 
 		// add tab panel to JFrame
 		getContentPane().add(tabPane);
@@ -156,9 +171,10 @@ public class ReaderFrame extends JFrame {
 		search.setLayout(null);
 		
 		JLabel lblSeattlePublicLibrary = new JLabel("Seattle Public Library");
+		lblSeattlePublicLibrary.setForeground(Color.WHITE);
 		lblSeattlePublicLibrary.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSeattlePublicLibrary.setFont(new Font("Century Schoolbook L", Font.BOLD, 22));
-		lblSeattlePublicLibrary.setBounds(174, 45, 310, 27);
+		lblSeattlePublicLibrary.setFont(new Font("Century Schoolbook L", Font.BOLD, 24));
+		lblSeattlePublicLibrary.setBounds(193, 59, 310, 27);
 		search.add(lblSeattlePublicLibrary);
 		
 		searchTxt = new JTextField();
@@ -192,7 +208,11 @@ public class ReaderFrame extends JFrame {
 		search.add(button);
 		
 		rdbtnActivity = new JRadioButton("Activity");
+		rdbtnActivity.setForeground(Color.BLACK);
+		rdbtnActivity.setFont(new Font("Lato Black", Font.PLAIN, 14));
 		rdbtnBook = new JRadioButton("Book");
+		rdbtnBook.setFont(new Font("Lato Black", Font.PLAIN, 14));
+		rdbtnBook.setForeground(Color.BLACK);
 		
 		rdbtnBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -219,20 +239,21 @@ public class ReaderFrame extends JFrame {
 
 			}
 		});
-		rdbtnActivity.setBackground(Color.WHITE);
-		rdbtnActivity.setBounds(354, 133, 149, 23);
+		rdbtnActivity.setOpaque(false);
+		rdbtnActivity.setBounds(389, 133, 149, 23);
 		search.add(rdbtnActivity);
 		
 		
 		rdbtnBook.setSelected(true);
-		rdbtnBook.setBackground(Color.WHITE);
-		rdbtnBook.setBounds(174, 133, 149, 23);
+		rdbtnBook.setOpaque(false);
+		rdbtnBook.setBounds(190, 133, 149, 23);
 		search.add(rdbtnBook);
 		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setFont(new Font("Lato Black", Font.PLAIN, 14));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setBounds(58, 416, 223, 15);
+		lblNewLabel.setBounds(515, 416, 223, 15);
 		lblNewLabel.setText(String.valueOf(recordNum)+" Records in Total");
 		search.add(lblNewLabel);
 	}
@@ -254,27 +275,37 @@ public class ReaderFrame extends JFrame {
 		info.setLayout(null);
 		
 		JLabel lblUsername = new JLabel();
-		lblUsername.setBounds(106, 66, 423, 15);
+		lblUsername.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblUsername.setForeground(Color.BLACK);
+		lblUsername.setBounds(205, 84, 423, 15);
 		lblUsername.setText("Username: " + user.getUserId());
 		info.add(lblUsername);
 		
 		JLabel lblReaderName = new JLabel();
-		lblReaderName.setBounds(106, 110, 423, 15);
+		lblReaderName.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblReaderName.setForeground(Color.BLACK);
+		lblReaderName.setBounds(205, 128, 423, 15);
 		lblReaderName.setText("Reader Name: " + user.getName());
 		info.add(lblReaderName);
 		
 		JLabel lblEmail = new JLabel();
-		lblEmail.setBounds(106, 160, 423, 15);
+		lblEmail.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblEmail.setForeground(Color.BLACK);
+		lblEmail.setBounds(205, 178, 423, 15);
 		lblEmail.setText("E-mail: " + user.getEmail());
 		info.add(lblEmail);
 		
 		JLabel lblAvailableQuantity = new JLabel();
-		lblAvailableQuantity.setBounds(106, 257, 423, 15);
+		lblAvailableQuantity.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblAvailableQuantity.setForeground(Color.BLACK);
+		lblAvailableQuantity.setBounds(205, 275, 423, 15);
 		lblAvailableQuantity.setText("Available Quantity: " + String.valueOf(10 - user.getBorrowedCount()));
 		info.add(lblAvailableQuantity);
 		
 		JLabel lblEmail_1_1 = new JLabel();
-		lblEmail_1_1.setBounds(106, 208, 423, 15);
+		lblEmail_1_1.setFont(new Font("Lato Black", Font.BOLD, 17));
+		lblEmail_1_1.setForeground(Color.BLACK);
+		lblEmail_1_1.setBounds(205, 226, 423, 15);
 		lblEmail_1_1.setText( "Borrowed Quantity: " + String.valueOf(user.getBorrowedCount()));
 		info.add(lblEmail_1_1);
 		
@@ -489,8 +520,6 @@ public class ReaderFrame extends JFrame {
 			}
 		}
 	}
-	
-	
 }
 
 

@@ -21,6 +21,7 @@ import gt.model.User;
 
 import javax.swing.JDesktopPane;
 import java.awt.Toolkit;
+import javax.swing.JLabel;
 
 
 public class AdminFrame extends JFrame {
@@ -134,6 +135,7 @@ public class AdminFrame extends JFrame {
 				adminInfoFrm.setLocation(10,10);
 				adminInfoFrm.setVisible(true);
 				desktopPane.add(adminInfoFrm);
+				desktopPane.setComponentZOrder(adminInfoFrm, 0);
 			}
 		});
 		mntmAddress.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/me.png")));
@@ -159,22 +161,25 @@ public class AdminFrame extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 12204, Short.MAX_VALUE)
+					.addGap(0))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+				.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
 		);
-		GroupLayout gl_desktopPane = new GroupLayout(desktopPane);
-		gl_desktopPane.setHorizontalGroup(
-			gl_desktopPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 696, Short.MAX_VALUE)
-		);
-		gl_desktopPane.setVerticalGroup(
-			gl_desktopPane.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 410, Short.MAX_VALUE)
-		);
-		desktopPane.setLayout(gl_desktopPane);
+		desktopPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/spl.png")));
+		lblNewLabel.setBounds(538, 254, 150, 153);
+		desktopPane.add(lblNewLabel);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/Picture1.png")));
+		label.setBounds(0, 0, 700, 432);
+		desktopPane.add(label);
 		contentPane.setLayout(gl_contentPane);
 	}
 
@@ -187,7 +192,7 @@ public class AdminFrame extends JFrame {
 		addUserFrm.setLocation(10,10);
 		addUserFrm.setVisible(true);
 		desktopPane.add(addUserFrm);
-		
+		desktopPane.setComponentZOrder(addUserFrm, 0);
 	}
 
 	/*
@@ -199,7 +204,7 @@ public class AdminFrame extends JFrame {
 		addNewActFrm.setLocation(10,10);
 		addNewActFrm.setVisible(true);
 		desktopPane.add(addNewActFrm);
-		
+		desktopPane.setComponentZOrder(addNewActFrm, 0);
 	}
 
 	/*
@@ -211,6 +216,7 @@ public class AdminFrame extends JFrame {
 		addUserFrm.setLocation(10,10);
 		addUserFrm.setVisible(true);
 		desktopPane.add(addUserFrm);
+		desktopPane.setComponentZOrder(addUserFrm, 0);
 	}
 
 	/*
@@ -222,7 +228,7 @@ public class AdminFrame extends JFrame {
 		addBookFrm.setLocation(10,10); //set relative location to desktop panel
 		addBookFrm.setVisible(true);
 		desktopPane.add(addBookFrm);
-		
+		desktopPane.setComponentZOrder(addBookFrm, 0);
 		
 	}
 
