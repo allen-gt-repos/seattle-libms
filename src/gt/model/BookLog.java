@@ -1,11 +1,9 @@
 package gt.model;
 
-/**
- * @author Wang, Yinuo
- * User entity relation model
- */
-public class Book {
-	
+import java.sql.Date;
+
+public class BookLog {
+
 	private int bookId;
 	private String title;
 	private String author;
@@ -13,35 +11,13 @@ public class Book {
 	private String isbn;
 	private String pubYear;
 	private String subject;
-	private int locationId;
 	private int availableCount;
 	
+	private Date borrowDate;
+	private Date returnDate;
 	
 	
-	public Book() {
-		super();
-		
-	}
-	
-	
-	public Book(int bookId, String title, String author, String publisher, String isbn, String pubYear, String subject,
-			int locationId, int availableCount) {
-		super();
-		this.bookId = bookId;
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-		this.isbn = isbn;
-		this.pubYear = pubYear;
-		this.subject = subject;
-		this.locationId = locationId;
-		this.availableCount = availableCount;
-	}
-
-
-	/*
-	 * get data and set data 
-	 */
+	// getter and setter
 	public int getBookId() {
 		return bookId;
 	}
@@ -84,19 +60,26 @@ public class Book {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public int getLocationId() {
-		return locationId;
-	}
-	public void setLocationId(int locationId) {
-		this.locationId = locationId;
-	}
 	public int getAvailableCount() {
 		return availableCount;
 	}
 	public void setAvailableCount(int availableCount) {
 		this.availableCount = availableCount;
 	}
+	public Date getBorrowDate() {
+		return borrowDate;
+	}
+	public void setBorrowDate(Date borrowDate) {
+		this.borrowDate = borrowDate;
+	}
+	public Date getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
 	
 	
-
+	
+	
 }

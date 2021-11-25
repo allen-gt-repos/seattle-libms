@@ -6,6 +6,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,7 +54,13 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//定义格式，不显示毫秒
+//		Timestamp now= new Timestamp(System.currentTimeMillis());//获取系统当前时间
+//
+//		String str= df.format(now);
+//
+//		java.sql.Date dd = new java.sql.Date(System.currentTimeMillis());
+//		System.out.println(dd);
 		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/spl.png")));
 		setResizable(false);
@@ -185,12 +194,14 @@ public class LoginFrame extends JFrame {
 		} catch (Exception e1) {
 			
 			JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
+			userNameTxt.setText("");
+			passwordTxt.setText("");
 //			e1.printStackTrace();
 		}finally {
 			
 			try {
 				dbUtil.closeCon(con);
-				dispose();
+//				dispose();
 			} catch (Exception e1) {
 				
 				e1.printStackTrace();

@@ -1,27 +1,30 @@
 package gt.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import gt.model.BookLoc;
-
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import gt.dao.BookDao;
+import gt.dao.UserDao;
+import gt.model.BookLoc;
+import gt.model.User;
+import gt.util.DBUtil;
 
 public class BookInfoFrame extends JFrame {
 
@@ -32,6 +35,12 @@ public class BookInfoFrame extends JFrame {
 	private JTextField PubYearTxt;
 	private JTextField AvailableTxt;
 
+	private UserDao userDao = new UserDao();
+	private BookDao bookDao = new BookDao();
+	private DBUtil dbUtil = new DBUtil();
+	
+	private BookLoc bookLoc = null;
+	private User currentUser = null;
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +48,7 @@ public class BookInfoFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookInfoFrame frame = new BookInfoFrame(null);
+					BookInfoFrame frame = new BookInfoFrame(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +60,13 @@ public class BookInfoFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BookInfoFrame(BookLoc bookLoc) {
+	public BookInfoFrame(BookLoc bookLocInput, User userInput) {
+		
+		// set book location user
+		this.bookLoc = bookLocInput;
+		this.currentUser = userInput;
+		
+		
 		setResizable(false);
 		
 		setTitle("More Info");
@@ -71,10 +86,11 @@ public class BookInfoFrame extends JFrame {
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(BookInfoFrame.class.getResource("/image/reset.png")));
-		btnNewButton.setBounds(234, 335, 130, 25);
+		btnNewButton.setBounds(300, 335, 120, 25);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNavigation = new JButton("Navigation");
+		btnNavigation.setFont(new Font("Dialog", Font.BOLD, 12));
 		btnNavigation.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNavigation.setIcon(new ImageIcon(BookInfoFrame.class.getResource("/image/about.png")));
 		btnNavigation.addActionListener(new ActionListener() {
@@ -82,9 +98,9 @@ public class BookInfoFrame extends JFrame {
 				navigateActionPerformed(e);
 			}
 		});
-		btnNavigation.setBounds(68, 335, 130, 25);
+		btnNavigation.setBounds(25, 335, 130, 25);
 		contentPane.add(btnNavigation);
-		
+
 		JLabel lblAuthor = new JLabel("Author:");
 		lblAuthor.setBounds(48, 61, 70, 15);
 		contentPane.add(lblAuthor);
@@ -189,6 +205,81 @@ public class BookInfoFrame extends JFrame {
 		TitleTxt.setBounds(48, 10, 360, 47);
 		TitleTxt.setText("<html>"+bookLoc.getTitle());
 		contentPane.add(TitleTxt);
+		
+		JButton btnBorrow = new JButton("Borrow");
+		btnBorrow.setIcon(new ImageIcon(BookInfoFrame.class.getResource("/image/bookManager.png")));
+		btnBorrow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrowActionPerformed(e);
+			}
+		});
+		btnBorrow.setBounds(167, 335, 120, 25);
+		contentPane.add(btnBorrow);
+	}
+
+	/*
+	 * Handle the borrow book event
+	 * 
+	 */
+	private void borrowActionPerformed(ActionEvent e) {
+		Connection con = null;
+		try {
+
+			con = dbUtil.getCon();
+			if (currentUser.getBorrowedCount() == 10) {
+				JOptionPane.showMessageDialog(null,
+						"You have borrowed too many books, please return a book before new borrowing.");
+				return;
+			} else if (bookLoc.getAvailableCount() == 0) {
+				JOptionPane.showMessageDialog(null,
+						"Failed to borrow this book. All copies of this book have been borrowed.");
+				return;
+			} else if (bookDao.checkBorrowedBook(con, bookLoc,currentUser)) { // if have borrowed, cannot borrow again
+				JOptionPane.showMessageDialog(null,
+						"You cannot borrow more than one copy of this book.");
+				return;
+			} else { // borrow the book
+
+				bookLoc.setAvailableCount(bookLoc.getAvailableCount() - 1);
+				int updateResult = bookDao.updateBook(con, bookLoc);
+				if (updateResult == 1) {
+					currentUser.setBorrowedCount(currentUser.getBorrowedCount() + 1);
+					int borrowResult = userDao.borrowReturnBook(con, currentUser);
+					int logResult = userDao.addNewBorrowLog(con, currentUser, bookLoc);
+
+					if (borrowResult == 1 && logResult == 1) {
+						Calendar date = new GregorianCalendar();
+						date.add(Calendar.DATE, +60);
+						String expectedReturnDate = date.getTime().toString();
+						JOptionPane.showMessageDialog(null,
+								"Borrow book successfully.\n The expected return date is " + expectedReturnDate);
+
+					} else {
+						bookLoc.setAvailableCount(bookLoc.getAvailableCount() + 1);
+						bookDao.updateBook(con, bookLoc);
+						JOptionPane.showMessageDialog(null, "Failed to borrow this book");
+						return;
+					}
+				} else {
+					bookLoc.setAvailableCount(bookLoc.getAvailableCount() + 1);
+					JOptionPane.showMessageDialog(null, "Failed to borrow this book");
+					return;
+				}
+
+			}
+		} catch (Exception e1) {
+
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (con != null) {
+					dbUtil.closeCon(con);
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
 	}
 
 	// handle the navigation event

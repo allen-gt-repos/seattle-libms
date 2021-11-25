@@ -104,7 +104,7 @@ public class ReaderUpdateInfoFrame extends JFrame {
 						user.setUserId(UsernameTxt.getText());;
 						int result  = userDao.updateInfo(con, user, userOldId);
 						if (result == 1) {
-							JOptionPane.showMessageDialog(null, "Update your account info successfully, please login again to update your account info.");
+							JOptionPane.showMessageDialog(null, "Update your account info successfully, please refresh your account info.");
 							dispose();
 						}else {
 							JOptionPane.showMessageDialog(null, "Failed to update your account info.");

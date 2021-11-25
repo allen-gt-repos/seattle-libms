@@ -3,7 +3,7 @@ package gt.model;
 public class BookLoc {
 
 	
-	private long bookId;
+	private int bookId;
 	private String title;
 	private String author;
 	private String publisher;
@@ -25,10 +25,10 @@ public class BookLoc {
 	
 	
 	// getter and setters
-	public long getBookId() {
+	public int getBookId() {
 		return bookId;
 	}
-	public void setBookId(long bookId) {
+	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
 	public String getTitle() {

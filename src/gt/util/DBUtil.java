@@ -25,8 +25,8 @@ public class DBUtil {
 	}
 	/*
 	 * Close the connection
-	 */
-	public void closeCon(Connection conn)throws Exception{
+	 */ 
+	public void closeCon(Connection conn) throws Exception{
 		if(conn!=null)
 		{
 			conn.close();
@@ -35,7 +35,7 @@ public class DBUtil {
 	/*
 	 * Connect to the database
 	 */
-	public Connection getCon()throws Exception{
+	public Connection getCon() throws Exception{
 		// Load database driver
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		// Connect database
