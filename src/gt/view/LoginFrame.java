@@ -6,9 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -61,7 +58,7 @@ public class LoginFrame extends JFrame {
 //
 //		java.sql.Date dd = new java.sql.Date(System.currentTimeMillis());
 //		System.out.println(dd);
-		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));
+		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));	
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/spl.png")));
 		setResizable(false);
 		setFont(new Font("Dialog", Font.BOLD, 14));
@@ -193,7 +190,7 @@ public class LoginFrame extends JFrame {
 			}
 		} catch (Exception e1) {
 			
-			JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
+			JOptionPane.showMessageDialog(null, "Failed to log in, please check and try again.");
 			userNameTxt.setText("");
 			passwordTxt.setText("");
 //			e1.printStackTrace();

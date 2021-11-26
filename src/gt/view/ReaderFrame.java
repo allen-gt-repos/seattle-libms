@@ -47,6 +47,7 @@ import gt.model.ActivityLoc;
 import gt.model.Book;
 import gt.model.BookLoc;
 import gt.model.BookLog;
+import gt.model.NewBook;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
@@ -57,13 +58,14 @@ public class ReaderFrame extends JFrame {
 	private JPanel search;
 	private JPanel info;
 	private JPanel bookshelf;
+	private JPanel recommend;
 	private JTabbedPane tabPane;
-	private JScrollPane scrollPane, scrollPane2;
-	private JTable ResultTable, HistoryTable;
+	private JScrollPane scrollPane, scrollPane2, scrollPane3;
+	private JTable ResultTable, HistoryTable, RecommendTable;
 	private JRadioButton rdbtnBook, rdbtnActivity;
 	private JTextField searchTxt;
 	private JLabel lblNewLabel;
-//	private JLabel lblBorrowedQuantity, lblAvailableQuantity;
+
 	private DBUtil dbUtil = new DBUtil();
 	private BookDao bookDao = new BookDao();
 	private UserDao userDao = new UserDao();
@@ -105,9 +107,12 @@ public class ReaderFrame extends JFrame {
 		buildSearchPanel();
 		buildInfoPanel();
 		buildBookshelf();
+		buildRecommend();
 		
+		// add panel to tab panel
 		tabPane.add("Search",search);
 		tabPane.add("My Bookshelf",bookshelf);
+		tabPane.add("My Recommand",recommend);
 		tabPane.add("Account Info",info);
 		tabPane.setSelectedIndex(0); 
 		
@@ -115,6 +120,179 @@ public class ReaderFrame extends JFrame {
 		getContentPane().add(tabPane);
 	}
 	
+	/*
+	 * Create the recommend panel
+	 */
+	private void buildRecommend() {
+		recommend = new JPanel();
+		recommend.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("My Recommended Book");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Lato Black", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(226, 52, 217, 15);
+		recommend.add(lblNewLabel_1);
+		
+		scrollPane3 = new JScrollPane();
+		scrollPane3.setBounds(52, 79, 600, 327);
+		scrollPane3.setBackground(Color.white);
+		recommend.add(scrollPane3);
+		
+		Vector bookColumn = new Vector<>();
+		bookColumn.add("No.");
+		bookColumn.add("Book Title");
+		bookColumn.add("ISBN");
+		bookColumn.add("Author");
+//		bookColumn.add("Expected Return Date");
+		
+		RecommendTable = new JTable(0,4);
+		RecommendTable.setSize(650, 350);
+		RecommendTable.setLocation(50, 60);
+		RecommendTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				recommendTableMousePressed(e);
+			}
+		});
+		RecommendTable.setBackground(Color.WHITE);
+		RecommendTable.setShowVerticalLines(false);
+		// set table header
+		DefaultTableModel dtm = new DefaultTableModel(null,bookColumn);
+		RecommendTable.setModel(dtm);
+		RecommendTable.getTableHeader().setReorderingAllowed(false);
+		RecommendTable.getTableHeader().setResizingAllowed(false);
+		//set row height and column width
+		RecommendTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+		RecommendTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+		RecommendTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+		RecommendTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+		RecommendTable.setRowHeight(30);
+		// set table contents center
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(JLabel.CENTER);
+		RecommendTable.setDefaultRenderer(Object.class, dtcr);
+//		bookshelf.add(HistoryTable);
+		scrollPane3.setViewportView(RecommendTable);
+		
+		// fill the table with already borrowed book
+		this.fillRecommendTable();
+	
+		// resize the icon
+		ImageIcon icon1 = new ImageIcon(ReaderFrame.class.getResource("/image/refresh.png"));
+		Image img = icon1.getImage();
+		Image newimg = img.getScaledInstance(20,20, Image.SCALE_DEFAULT); 
+		
+		JToolBar toolBar = new JToolBar();
+		toolBar.setBounds(0, 0, 705, 30);
+		recommend.add(toolBar);
+		
+		JButton btnRefresh_1 = new JButton("Refresh");
+		btnRefresh_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fillRecommendTable();
+			}
+		});
+		toolBar.add(btnRefresh_1);
+		btnRefresh_1.setIcon(new ImageIcon(newimg));
+		
+		JButton btnNewButton_3 = new JButton("Recommend Book");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewBookActionPerformed(e);
+			}
+		});
+		btnNewButton_3.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/add.png")));
+		toolBar.add(btnNewButton_3);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(ReaderFrame.class.getResource("/image/Picture1.png")));
+		label.setBounds(0, 27, 705, 416);
+		recommend.add(label);
+		
+	}
+	/*
+	 * handle the add new recommend book event
+	 */
+	protected void addNewBookActionPerformed(ActionEvent e) {
+		
+		AddNewRcmdBookFrame addNewRcmdBookFrame = new AddNewRcmdBookFrame(currentUser);
+		addNewRcmdBookFrame.setLocationRelativeTo(null);
+		addNewRcmdBookFrame.setVisible(true);
+		
+		
+	}
+	/*
+	 * fill the recommend book table
+	 */
+	private void fillRecommendTable() {
+		// TODO 自动生成的方法存根
+		DefaultTableModel dtm = (DefaultTableModel) RecommendTable.getModel();
+		dtm.setRowCount(0);
+		Connection con = null;
+		try {
+			int n = 0;
+			con = dbUtil.getCon();
+			ResultSet rs = bookDao.getRecommendBook(con, currentUser);
+			if(rs.next()) {
+			do {
+				n+=1;
+				Vector v = new Vector();
+				v.add(n);
+				v.add(rs.getString("Title"));
+				v.add(rs.getString("Isbn"));
+				v.add(rs.getString("Author"));
+			
+				dtm.addRow(v);
+			} while (rs.next());
+			}
+			DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+			dtcr.setHorizontalAlignment(JLabel.CENTER);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			if (con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
+
+	private void recommendTableMousePressed(MouseEvent e) {
+		// TODO 自动生成的方法存根
+		int rowIndex = RecommendTable.getSelectedRow();
+		String FirstColTxt = (String)RecommendTable.getValueAt(rowIndex, 1);
+		Connection con = null;
+		
+		try {
+			con = dbUtil.getCon();
+			NewBook newBook= bookDao.getRecommendBookInfo(con, FirstColTxt, currentUser);
+			NewBookInfoFrame newBookInfoFrm = new NewBookInfoFrame(newBook);
+			newBookInfoFrm.setLocationRelativeTo(null);
+			newBookInfoFrm.setVisible(true);
+						
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	/*
+	 * Create the bookshelf panel
+	 */
 	private void buildBookshelf() {
 		
 		bookshelf = new JPanel();
@@ -132,13 +310,13 @@ public class ReaderFrame extends JFrame {
 		bookshelf.add(scrollPane2);
 		
 		Vector bookColumn = new Vector<>();
+		bookColumn.add("No.");
 		bookColumn.add("Book Title");
 		bookColumn.add("ISBN");
 		bookColumn.add("Borrow Date");
 		bookColumn.add("Expected Return Date");
 		
-		HistoryTable = new JTable(0,3);
-		HistoryTable.setShowGrid(false);
+		HistoryTable = new JTable(0,5);
 		HistoryTable.setSize(650, 350);
 		HistoryTable.setLocation(50, 60);
 		HistoryTable.addMouseListener(new MouseAdapter() {
@@ -155,10 +333,11 @@ public class ReaderFrame extends JFrame {
 		HistoryTable.getTableHeader().setReorderingAllowed(false);
 		HistoryTable.getTableHeader().setResizingAllowed(false);
 		//set row height and column width
-		HistoryTable.getColumnModel().getColumn(0).setPreferredWidth(300);
-		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-		HistoryTable.getColumnModel().getColumn(2).setPreferredWidth(90);
-		HistoryTable.getColumnModel().getColumn(3).setPreferredWidth(160);
+		HistoryTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+		HistoryTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+		HistoryTable.getColumnModel().getColumn(3).setPreferredWidth(90);
+		HistoryTable.getColumnModel().getColumn(4).setPreferredWidth(160);
 		HistoryTable.setRowHeight(30);
 		// set table contents center
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
@@ -204,6 +383,9 @@ public class ReaderFrame extends JFrame {
 		
 	}
 
+	/*
+	 * Show the borrow history frame
+	 */
 	private void showHistoryActionPerformed(ActionEvent e) {
 		
 		BorrowHistoryFrame borrowHistoryFrame = new BorrowHistoryFrame(currentUser);
@@ -479,7 +661,7 @@ public class ReaderFrame extends JFrame {
 			tabPane.remove(info);
 			buildInfoPanel();
 			tabPane.add("Account Info",info);
-			tabPane.setSelectedIndex(2); 
+			tabPane.setSelectedIndex(3); 
 			
 		} catch (Exception e1) {
 			// TODO 自动生成的 catch 块
@@ -636,10 +818,13 @@ public class ReaderFrame extends JFrame {
 		Connection con = null;
 		try {
 			con = dbUtil.getCon();
+			int n = 0;
 			ResultSet rs = bookDao.searchBorrowedBook(con, currentUser);
 			if(rs.next()) {
 			do {
+				n+=1;
 				Vector v = new Vector();
+				v.add(n);
 				v.add(rs.getString("Title"));
 				v.add(rs.getString("Isbn"));
 				v.add(rs.getDate("Borrow_date"));

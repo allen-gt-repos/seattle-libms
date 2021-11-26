@@ -11,6 +11,7 @@ import gt.model.Book;
 import gt.model.BookLoc;
 import gt.model.BookLog;
 import gt.model.Location;
+import gt.model.NewBook;
 import gt.model.User;
 import gt.util.StringUtil;
 
@@ -251,4 +252,144 @@ public class BookDao {
 		
 		return pstate.executeQuery();
 	}
+	
+	/*
+	 * get the user's recommend book
+	 */
+	public ResultSet getRecommendBook(Connection con, User user) throws Exception{
+		
+		String sql = "select * from new_book where User_id=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, user.getUserId());
+//		pstate.setString(2, user.getUserId());
+		return pstate.executeQuery(); 
+		
+	}
+	
+	/*
+	 * get recommend book details
+	 */
+	public NewBook getRecommendBookInfo(Connection con, String title, User user) throws Exception{
+		
+		String sql = "select * from new_book where Title=? and User_id=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, title);
+		pstate.setString(2, user.getUserId());
+		ResultSet rs = pstate.executeQuery(); 
+		NewBook resultBook = null;
+		if (rs.next()) {
+			resultBook = new NewBook();
+			resultBook.setTitle(rs.getString("Title"));
+			resultBook.setAuthor(rs.getString("Author"));
+			resultBook.setIsbn(rs.getString("Isbn"));
+			resultBook.setPublisher(rs.getString("Publisher"));
+			resultBook.setPubYear(rs.getString("Pub_Year"));
+			resultBook.setSubject(rs.getString("Subject"));
+			resultBook.setUserId(rs.getString("User_id"));
+			resultBook.setRecommendDate(rs.getDate("Rcmd_date"));
+		}
+		return resultBook;
+		
+		
+	}
+	
+	/*
+	 * delete the recommend book record
+	 */
+	public int deleteRecommendBook(Connection con , NewBook newBook) throws Exception{
+		
+		
+		String sql = "delete from new_book where User_id=? and Isbn=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, newBook.getUserId());
+		pstate.setString(2, newBook.getIsbn());
+		
+		return pstate.executeUpdate();
+		
+	}
+	
+	/*
+	 * add new recommend book
+	 */
+	public int addRecommendBook(Connection con , NewBook newBook) throws Exception{
+		
+		String sql = "insert into new_book values(?,?,?,?,?,?,?,?)";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, newBook.getUserId());
+		pstate.setString(2, newBook.getIsbn());
+		pstate.setString(3, newBook.getTitle());
+		pstate.setString(4, newBook.getAuthor());
+		pstate.setString(5, newBook.getPubYear());
+		pstate.setString(6, newBook.getPublisher());
+		pstate.setString(7, newBook.getSubject());
+		pstate.setDate(8, newBook.getRecommendDate());
+		
+		
+		return pstate.executeUpdate();
+		
+	}
+	/*
+	 * Check this book has been recommended by the same reader or not
+	 */
+	public boolean checkRecommendedBook(Connection con, NewBook newBook) throws Exception{
+		
+		String sql = "select * from new_book where User_id=? and Isbn=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(1, newBook.getUserId());
+//		pstate.setString(2, newBook.getTitle());
+		pstate.setString(2, newBook.getIsbn());
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
+	/*
+	 * check the book has been in the library or not
+	 */
+	public boolean checkExistBook(Connection con, NewBook newBook) throws Exception{
+		
+		StringBuffer sql = new StringBuffer("select * from book");
+		if (StringUtil.isNotEmpty(newBook.getTitle())) {
+			sql.append(" and Title like '%"+newBook.getTitle()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(newBook.getAuthor())) {
+			sql.append(" and Author like '%"+newBook.getAuthor()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(newBook.getSubject())) {
+			sql.append(" and Subject like '%"+newBook.getSubject()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(newBook.getIsbn())) {
+			sql.append(" and Isbn like '%"+newBook.getIsbn()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(newBook.getPubYear())) {
+			sql.append(" and Isbn like '%"+newBook.getPubYear()+"%'");
+		}
+		if (StringUtil.isNotEmpty(newBook.getPublisher())) {
+			sql.append(" and Isbn like '%"+newBook.getPublisher()+"%'");
+		}
+		PreparedStatement pstate = con.prepareStatement(sql.toString().replaceFirst("and", "where"));
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+		
+	}
+	
 }
