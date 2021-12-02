@@ -84,5 +84,21 @@ public class StringUtil {
 
     	}
 
-
+    /**
+     * @author Wang, Yinuo
+     * @param coordStr
+     * @return the float coordinate of destination
+     */
+    public static float[] getCoordinate(String coordStr) {
+    	
+    	float coord[] = new float[2];
+    	String xyString[] = coordStr.split(",");
+    	for (int i = 0; i < 2; i++) {
+			coord[i] = Float.valueOf(xyString[i]);	
+//			System.out.println(coord[i]);
+		}
+    	
+    	
+    	return coord;
+    }
 }

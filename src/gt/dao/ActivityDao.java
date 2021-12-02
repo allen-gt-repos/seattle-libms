@@ -84,11 +84,13 @@ public class ActivityDao {
 			resultActivityLoc.setBeginTime(rs.getTime("Begin_time"));
 			resultActivityLoc.setEndTime(rs.getTime("End_time"));
 			
-			resultActivityLoc.setFloor(rs.getInt("Floor#"));
+			resultActivityLoc.setFloor(rs.getInt("Floor"));
 			resultActivityLoc.setHallName(rs.getString("Hall_name"));
-			resultActivityLoc.setBookshelf(rs.getInt("Bookshelf#"));
-			resultActivityLoc.setColumn(rs.getInt("Column#"));
-			resultActivityLoc.setLayer(rs.getInt("Layer#"));
+			resultActivityLoc.setHallCoord(rs.getString("Hall_coordinate"));
+			resultActivityLoc.setBookshelf(rs.getInt("Bookshelf"));
+			resultActivityLoc.setBookShelfCoord(rs.getString("Bookshelf_coordinate"));
+			resultActivityLoc.setColumn(rs.getInt("Column"));
+			resultActivityLoc.setLayer(rs.getInt("Layer"));
 		}
 		else {
 			System.out.println("no result error");

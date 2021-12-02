@@ -64,14 +64,14 @@ public class BorrowHistoryFrame extends JFrame {
 		currentUser = user;
 		setTitle("Borrow History");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 540, 300);
+		setBounds(100, 100, 540, 412);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 540, 210);
+		scrollPane.setBounds(0, 0, 540, 310);
 		contentPane.add(scrollPane);
 
 		Vector bookColumn = new Vector<>();
@@ -116,7 +116,7 @@ public class BorrowHistoryFrame extends JFrame {
 			}
 		});
 		btnGoBack.setIcon(new ImageIcon(BorrowHistoryFrame.class.getResource("/image/reset.png")));
-		btnGoBack.setBounds(220, 225, 117, 25);
+		btnGoBack.setBounds(213, 334, 117, 25);
 		contentPane.add(btnGoBack);
 	}
 

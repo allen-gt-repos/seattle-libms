@@ -29,7 +29,7 @@ public class ActivityInfoFrame extends JFrame {
 	private JTextField DateTxt;
 	private JTextField TimeTxt;
 	private JTextField OrganizerTxt;
-
+	private ActivityLoc activityLoc;
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +51,7 @@ public class ActivityInfoFrame extends JFrame {
 	 */
 	public ActivityInfoFrame(ActivityLoc activityLoc) {
 		
+		this.activityLoc = activityLoc;
 		setTitle("More Info");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 440, 415);
@@ -142,13 +143,25 @@ public class ActivityInfoFrame extends JFrame {
 
 	
 	
-	// handle the navigation event
+	/*
+	 *  handle the navigation event
+	 */
 	private void navigateActionPerformed(ActionEvent e) {
 		// prepare for the navigation
-		JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
-		
+		int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
+		if (answer == 0) {
+			Navigation navigation = new Navigation(activityLoc);
+//			System.out.println(activityLoc.getHallCoord());
+			navigation.setLocationRelativeTo(null);
+			navigation.setVisible(true);
+			navigation.publishActivityCoord();
+		}else {
+			return;
+		}
 	}
-	// handle the go back event
+	/*
+	 *  handle the go back event
+	 */
 	private void gobackActionPerformed(ActionEvent e) {
 		// close the window
 		dispose();

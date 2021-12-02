@@ -21,14 +21,16 @@ import gt.dao.UserDao;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
+import javax.swing.JPasswordField;
 
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userNameTxt;
-	private JTextField passwordTxt;
+//	private JTextField passwordTxt;
 	private DBUtil dbUtil = new DBUtil();
 	private UserDao userDao = new UserDao();
+	private JPasswordField passwordField;
 	
 	/**
 	 * Launch the application.
@@ -114,15 +116,16 @@ public class LoginFrame extends JFrame {
 		contentPane.add(userNameTxt);
 		userNameTxt.setColumns(10);
 		
-		passwordTxt = new JTextField();
-		passwordTxt.setBounds(180, 115, 140, 22);
-		contentPane.add(passwordTxt);
-		passwordTxt.setColumns(10);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(181, 120, 139, 26);
+		contentPane.add(passwordField);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/spl3.png")));
 		label.setBounds(12, 0, 131, 146);
 		contentPane.add(label);
+		
+
 		
 	}
 	/*
@@ -143,7 +146,8 @@ public class LoginFrame extends JFrame {
 		
 		// get input
 		String uid = this.userNameTxt.getText();
-		String pass = this.passwordTxt.getText();
+		String pass = new String(this.passwordField.getPassword());
+	
 		// check input
 		if(StringUtil.isEmpty(uid)) 
 		{
@@ -186,13 +190,13 @@ public class LoginFrame extends JFrame {
 			{
 				JOptionPane.showMessageDialog(null, "Your username or password is wrong, please check and try again.");
 				userNameTxt.setText("");
-				passwordTxt.setText("");
+				passwordField.setText("");
 			}
 		} catch (Exception e1) {
 			
 			JOptionPane.showMessageDialog(null, "Failed to log in, please check and try again.");
 			userNameTxt.setText("");
-			passwordTxt.setText("");
+			passwordField.setText("");
 //			e1.printStackTrace();
 		}finally {
 			
@@ -205,12 +209,4 @@ public class LoginFrame extends JFrame {
 			}
 		}
 	}
-
-	
-	
-
-	
-	
-	
-	
 }

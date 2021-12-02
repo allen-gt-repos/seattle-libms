@@ -333,8 +333,8 @@ public class ReaderFrame extends JFrame {
 		HistoryTable.getTableHeader().setReorderingAllowed(false);
 		HistoryTable.getTableHeader().setResizingAllowed(false);
 		//set row height and column width
-		HistoryTable.getColumnModel().getColumn(0).setPreferredWidth(20);
-		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+		HistoryTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		HistoryTable.getColumnModel().getColumn(1).setPreferredWidth(290);
 		HistoryTable.getColumnModel().getColumn(2).setPreferredWidth(100);
 		HistoryTable.getColumnModel().getColumn(3).setPreferredWidth(90);
 		HistoryTable.getColumnModel().getColumn(4).setPreferredWidth(160);

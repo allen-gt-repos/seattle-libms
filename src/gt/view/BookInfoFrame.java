@@ -285,7 +285,15 @@ public class BookInfoFrame extends JFrame {
 	// handle the navigation event
 	private void navigateActionPerformed(ActionEvent e) {
 		// prepare for the navigation
-		JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
+		int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
+		if (answer == 0) {
+			Navigation navigation = new Navigation(bookLoc);
+			navigation.setLocationRelativeTo(null);
+			navigation.setVisible(true);
+			navigation.publishBookCoord();
+		}else {
+			return;
+		}
 		
 	}
 	// handle the go back event

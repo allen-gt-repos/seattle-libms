@@ -100,11 +100,13 @@ public class BookDao {
 			resultBookLoc.setSubject(rs.getString("Subject"));
 			resultBookLoc.setAvailableCount(rs.getInt("Available_count"));
 			
-			resultBookLoc.setFloor(rs.getInt("Floor#"));
+			resultBookLoc.setFloor(rs.getInt("Floor"));
 			resultBookLoc.setHallName(rs.getString("Hall_name"));
-			resultBookLoc.setBookshelf(rs.getInt("Bookshelf#"));
-			resultBookLoc.setColumn(rs.getInt("Column#"));
-			resultBookLoc.setLayer(rs.getInt("Layer#"));
+			resultBookLoc.setHallName(rs.getString("Hall_coordinate"));
+			resultBookLoc.setBookshelf(rs.getInt("Bookshelf"));
+			resultBookLoc.setBookShelfCoord(rs.getString("Bookshelf_coordinate"));
+			resultBookLoc.setColumn(rs.getInt("Column"));
+			resultBookLoc.setLayer(rs.getInt("Layer"));
 		}
 		return resultBookLoc;
 	}
