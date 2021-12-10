@@ -237,7 +237,7 @@ public class BookReturnFrame extends JFrame {
 			int userFlag = userDao.borrowReturnBook(con, currentUser);
 			int logFlag = userDao.updateBorrowLog(con, currentUser, bookLog);
 			int bookFlag = bookDao.updateBook(con, bookLog);
-			
+			System.out.println(userFlag+" "+logFlag+" "+bookFlag);
 			if (userFlag == 1 && logFlag == 1 && bookFlag == 1) {
 				JOptionPane.showMessageDialog(null, "Book has been returned successfully.");
 			}

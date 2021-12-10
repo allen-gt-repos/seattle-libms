@@ -1,27 +1,25 @@
 package gt.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import gt.model.ActivityLoc;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
+import gt.util.LcmSubscribeUtil;
+import gt.util.StringUtil;
 
 public class ActivityInfoFrame extends JFrame {
 
@@ -37,7 +35,7 @@ public class ActivityInfoFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ActivityInfoFrame frame = new ActivityInfoFrame(null);
+					ActivityInfoFrame frame = new ActivityInfoFrame(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,9 +47,12 @@ public class ActivityInfoFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ActivityInfoFrame(ActivityLoc activityLoc) {
+	public ActivityInfoFrame(ActivityLoc activityLoc, LcmSubscribeUtil lcm) {
 		
 		this.activityLoc = activityLoc;
+		// set the destination for navigation end condition
+		lcm.setDestination(StringUtil.getCoordinate(activityLoc.getHallCoord()));
+		
 		setTitle("More Info");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 440, 415);
@@ -74,7 +75,15 @@ public class ActivityInfoFrame extends JFrame {
 		JButton btnNavigation = new JButton("Navigation");
 		btnNavigation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				navigateActionPerformed(e);
+				int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
+				if (answer == 0) {
+					// set the navigation begin flag
+					lcm.setNavFlag();
+					navigateActionPerformed(e);
+				}
+				else {
+					return;
+				}
 			}
 		});
 		btnNavigation.setIcon(new ImageIcon(ActivityInfoFrame.class.getResource("/image/about.png")));
@@ -148,16 +157,12 @@ public class ActivityInfoFrame extends JFrame {
 	 */
 	private void navigateActionPerformed(ActionEvent e) {
 		// prepare for the navigation
-		int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
-		if (answer == 0) {
-			Navigation navigation = new Navigation(activityLoc);
-//			System.out.println(activityLoc.getHallCoord());
-			navigation.setLocationRelativeTo(null);
-			navigation.setVisible(true);
-			navigation.publishActivityCoord();
-		}else {
-			return;
-		}
+
+			NavigationDialog navigationDialog = new NavigationDialog(activityLoc);
+			navigationDialog.setLocationRelativeTo(null);
+			navigationDialog.setVisible(true);
+			navigationDialog.publishActivityCoord();
+	
 	}
 	/*
 	 *  handle the go back event

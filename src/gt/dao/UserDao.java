@@ -110,7 +110,7 @@ public class UserDao {
 	}
 	
 	/*
-	 * update the user account info
+	 * update the user account info by reader
 	 */
 	public int updateInfo(Connection con, User user, String userIdStr) throws Exception{
 		
@@ -193,7 +193,7 @@ public class UserDao {
 	 */
 	public int updateBorrowLog(Connection con, User user, BookLog bookLog) throws Exception{
 		
-		String sql = "update borrow_return set Return_date=? where Book_id=? and User_id=?";
+		String sql = "update borrow_return set Return_date=? where Book_id=? and User_id=? and Return_date is null";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		pstate.setDate(1, bookLog.getReturnDate());
 		pstate.setInt(2, bookLog.getBookId());
@@ -202,6 +202,79 @@ public class UserDao {
 		return pstate.executeUpdate();
 	}
 	
-	
-	
+	/*
+	 * search user account according to username
+	 */
+	public User searchUser(Connection con, String username) throws Exception{
+		
+		User resultUser = null;
+		String sql = "select * from user where User_id =? and User_type=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		pstate.setString(1, username);
+		pstate.setInt(2, 1);
+		//		do the query
+		ResultSet rs = pstate.executeQuery();
+		//		if query result is not empty
+		if(rs.next()) {
+			resultUser = new User();
+			resultUser.setUserId(rs.getString("User_id"));
+			resultUser.setPassword(rs.getString("Password"));
+			resultUser.setName(rs.getString("Name"));
+			resultUser.setEmail(rs.getString("Email"));
+			resultUser.setBorrowedCount(rs.getInt("Borrowed_count"));
+			resultUser.setUserType(rs.getInt("User_type")); 
+		}
+		
+		return resultUser;
+		
+	}
+	/*
+	 * update reader account info by admin
+	 */
+	public int updateReader(Connection con, User user, String userIdStr) throws Exception{
+		
+		String sql = "update user set User_id=?, Email=?, Name=?, Password=?, Borrowed_count=? where User_id=?";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setString(6, userIdStr);
+		pstate.setString(1, user.getUserId());
+		pstate.setString(2, user.getEmail());
+		pstate.setString(3, user.getName());
+		pstate.setString(4, user.getPassword());
+		pstate.setInt(5, user.getBorrowedCount());
+		return pstate.executeUpdate();
+
+	}
+
+	/*
+	 * delete user account by admin
+	 */
+	public int deleteUser(Connection con, User user) throws Exception{
+		
+		String sql= "delete from user where User_id=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+
+		pstate.setString(1, user.getUserId());
+		return pstate.executeUpdate();
+		
+	}
+	/*
+	 * check if the reader has returned all books
+	 */
+	public boolean checkAllReturn(Connection con, User user) throws Exception{
+		
+		String sql= "select * from borrow_return where User_id=? and Return_date is null";
+		PreparedStatement pstate = con.prepareStatement(sql);
+
+		pstate.setString(1, user.getUserId());
+		ResultSet rs = pstate.executeQuery();
+		if (!rs.next()) {
+			return true;
+			
+		}else {
+			return false;
+		}
+		
+	}
 }

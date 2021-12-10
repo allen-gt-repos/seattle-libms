@@ -3,6 +3,7 @@
  */
 package gt.util;
 import java.io.*;
+import gt.view.NavigationDialog;
 import lcm.lcm.*;
 import gt.util.lcmtypes.*;
 /**
@@ -12,13 +13,15 @@ import gt.util.lcmtypes.*;
 public class LcmPublishUtil extends Thread {
 
 	private float pvState[] = null;
-	static LCM lcm = null;
+	private static LCM lcm = null;
+
+//	private static float[] coordBias = {(float) -2.5, (float) 0.55};
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		float coord[] = {11.00f,0.11f};
+		float coord[] = {0.00f,0.11f};
 		LcmPublishUtil t1 = new LcmPublishUtil(coord);
 		t1.start();
 		
@@ -47,7 +50,7 @@ public class LcmPublishUtil extends Thread {
 						// TODO 自动生成的 catch 块
 						e.printStackTrace();
 					}
-			         Thread.sleep(1000);
+			         Thread.sleep(10);
 				} catch (InterruptedException e) {
 				// TODO: handle exception
 					break;
@@ -67,30 +70,11 @@ public class LcmPublishUtil extends Thread {
 	public static void sendMessage(float[] coordFloat, String channel) throws IOException 
 	{
 		
-
-				 destination_t des_t = new destination_t();
-		         des_t.des_x = coordFloat[0];
-		         des_t.des_y = coordFloat[1];
-		         lcm.publish (channel, des_t);
-		         
+		destination_t des_t = new destination_t();
+		des_t.des_x = coordFloat[0];// + coordBias[0];
+		des_t.des_y = coordFloat[1];// + coordBias[1];
+		lcm.publish (channel, des_t);         
 
 	}
-		            
-		//            msg.timestamp = System.nanoTime();
-		//
-		//            msg.position = new double[] { 1, 2, 3 };
-		//            msg.orientation = new double[] { 1, 0, 0, 0 };
-		//
-		//            msg.ranges = new short[] {
-		//                0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
-		//            };
-		//            msg.num_ranges = msg.ranges.length;
-		//            msg.name = "example string";
-		//            msg.enabled = true;
-		
-		            
-	
-
-	
 
 }

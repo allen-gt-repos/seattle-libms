@@ -50,6 +50,7 @@ import gt.model.BookLog;
 import gt.model.NewBook;
 import gt.model.User;
 import gt.util.DBUtil;
+import gt.util.LcmSubscribeUtil;
 import gt.util.StringUtil;
 
 
@@ -72,6 +73,8 @@ public class ReaderFrame extends JFrame {
 	private ActivityDao activityDao = new ActivityDao();
 	private User currentUser = null;
 	private long recordNum = 0;
+	LcmSubscribeUtil lcm_sub = new LcmSubscribeUtil("RobotState");
+	
 	/**
 	 * Launch the application.
 	 */
@@ -95,7 +98,7 @@ public class ReaderFrame extends JFrame {
 		
 		// set current user
 		this.currentUser = user;
-		
+		lcm_sub.start();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReaderFrame.class.getResource("/image/spl3.png")));
 		setTitle("Seattle Public Library Reader System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -348,11 +351,6 @@ public class ReaderFrame extends JFrame {
 		
 		// fill the table with already borrowed book
 		this.fillHistoryTable();
-	
-		// resize the icon
-		ImageIcon icon1 = new ImageIcon(ReaderFrame.class.getResource("/image/refresh.png"));
-		Image img = icon1.getImage();
-		Image newimg = img.getScaledInstance(20,20, Image.SCALE_DEFAULT); 
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setBounds(0, 0, 705, 30);
@@ -365,6 +363,10 @@ public class ReaderFrame extends JFrame {
 			}
 		});
 		toolBar.add(btnRefresh_1);
+		// resize the icon
+		ImageIcon icon1 = new ImageIcon(ReaderFrame.class.getResource("/image/refresh.png"));
+		Image img = icon1.getImage();
+		Image newimg = img.getScaledInstance(20,20, Image.SCALE_DEFAULT); 
 		btnRefresh_1.setIcon(new ImageIcon(newimg));
 		
 		JButton btnNewButton_3 = new JButton("History");
@@ -811,6 +813,10 @@ public class ReaderFrame extends JFrame {
 	}
 
 	
+	/*
+	 * Generate the borrow history result table
+	 * 
+	 */
 	private void fillHistoryTable(){
 		
 		DefaultTableModel dtm = (DefaultTableModel) HistoryTable.getModel();
@@ -867,7 +873,7 @@ public class ReaderFrame extends JFrame {
 	private void historyTableMousePressed(MouseEvent e) {
 		
 		int rowIndex = HistoryTable.getSelectedRow();
-		String FirstColTxt = (String)HistoryTable.getValueAt(rowIndex, 0);
+		String FirstColTxt = (String)HistoryTable.getValueAt(rowIndex, 1);
 		Connection con = null;
 		
 		try {
@@ -899,22 +905,33 @@ public class ReaderFrame extends JFrame {
 	private void resultTableMousePressed(java.awt.event.MouseEvent e) {
 		
 		int rowIndex = ResultTable.getSelectedRow();
-		String FirstColTxt = (String)ResultTable.getValueAt(rowIndex, 0);
+		String FirstColTxt = (String) ResultTable.getValueAt(rowIndex, 0);
+		String SecondColTxt = (String) ResultTable.getValueAt(rowIndex, 1);
+		String ThirdColTxt = (String) ResultTable.getValueAt(rowIndex, 2);
 		Connection con = null;
 		
 		try {
 			con = dbUtil.getCon();
 			if (rdbtnBook.isSelected()) {
-				BookLoc bookLoc = bookDao.getBookInfo(con,FirstColTxt);
-				BookInfoFrame bookInfoFrm = new BookInfoFrame(bookLoc,currentUser);
-				bookInfoFrm.setLocationRelativeTo(null);
-				bookInfoFrm.setVisible(true);
+				BookLoc bookLoc = bookDao.getBookInfo(con,SecondColTxt);
+				if (bookLoc != null) {
+					BookInfoFrame bookInfoFrm = new BookInfoFrame(bookLoc,currentUser,lcm_sub);
+					bookInfoFrm.setLocationRelativeTo(null);
+					bookInfoFrm.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Load book info failed.");
+				}
+
 				
 			}else if(rdbtnActivity.isSelected()) {
-				ActivityLoc activityLoc = activityDao.getActivityInfo(con,FirstColTxt);
-				ActivityInfoFrame activityInfoFrm = new ActivityInfoFrame(activityLoc);
-				activityInfoFrm.setLocationRelativeTo(null);
-				activityInfoFrm.setVisible(true);
+				ActivityLoc activityLoc = activityDao.getActivityInfo(con,FirstColTxt,ThirdColTxt);
+				if (activityLoc != null) {
+					ActivityInfoFrame activityInfoFrm = new ActivityInfoFrame(activityLoc,lcm_sub);
+					activityInfoFrm.setLocationRelativeTo(null);
+					activityInfoFrm.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Load activity info failed.");
+				}
 			}			
 		} catch (Exception e1) {
 			

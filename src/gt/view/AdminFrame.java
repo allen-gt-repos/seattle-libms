@@ -27,7 +27,8 @@ import javax.swing.JLabel;
 public class AdminFrame extends JFrame {
 
 	private JPanel contentPane;
-	JDesktopPane desktopPane = new JDesktopPane();
+	private JDesktopPane desktopPane = new JDesktopPane();
+	private User loginUser = null;
 	/**
 	 * Launch the application.
 	 */
@@ -49,6 +50,8 @@ public class AdminFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminFrame(User user) {
+		
+		this.loginUser = user;
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminFrame.class.getResource("/image/spl3.png")));
 		setFont(new Font("Dialog", Font.BOLD, 14));
@@ -73,6 +76,20 @@ public class AdminFrame extends JFrame {
 		mnNewMenu.add(mntmAddNewBook);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Manage Existing Book");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manageBookActionPerformed(e);
+			}
+		});
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Manage Recommend Book");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				importRecommandBookActionPerformed(e);
+			}
+		});
+		mntmNewMenuItem_1.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/about.png")));
+		mnNewMenu.add(mntmNewMenuItem_1);
 		mntmNewMenuItem.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/edit.png")));
 		mnNewMenu.add(mntmNewMenuItem);
 		
@@ -89,6 +106,11 @@ public class AdminFrame extends JFrame {
 		mnActivityManage.add(mntmCreateNewActivity);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Manage Current Activity");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manageActivityActionPerformed(e);
+			}
+		});
 		mntmNewMenuItem_6.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/bookTypeManager.png")));
 		mnActivityManage.add(mntmNewMenuItem_6);
 		
@@ -107,39 +129,25 @@ public class AdminFrame extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_3);
 		
-		JMenuItem mntmEditExistingAccount = new JMenuItem("Edit Account");
+		JMenuItem mntmEditExistingAccount = new JMenuItem("Manage Account");
+		mntmEditExistingAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manageReaderActionPerformed(e);
+			}
+		});
 		mnNewMenu_2.add(mntmEditExistingAccount);
 		
-		JMenu mnNewMenu_4 = new JMenu("Manage Admin Account");
-		mnNewMenu_4.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/password.png")));
-		mnUserManager.add(mnNewMenu_4);
-		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Create Account");
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Create Admin Account");
+		mntmNewMenuItem_4.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/password.png")));
+		mnUserManager.add(mntmNewMenuItem_4);
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addNewAdminActionPerformed(e);
 			}
 		});
-		mnNewMenu_4.add(mntmNewMenuItem_4);
-		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Edit Account");
-		mnNewMenu_4.add(mntmNewMenuItem_5);
 		
 		JMenu mnAboutUs = new JMenu("My Account");
 		menuBar.add(mnAboutUs);
-		
-		JMenuItem mntmAddress = new JMenuItem("Account Info");
-		mntmAddress.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AdminInfoFrame adminInfoFrm = new AdminInfoFrame(user);
-				adminInfoFrm.setLocation(10,10);
-				adminInfoFrm.setVisible(true);
-				desktopPane.add(adminInfoFrm);
-				desktopPane.setComponentZOrder(adminInfoFrm, 0);
-			}
-		});
-		mntmAddress.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/me.png")));
-		mnAboutUs.add(mntmAddress);
 		
 		JMenuItem mntmLogOut = new JMenuItem("Log Out");
 		mntmLogOut.addActionListener(new ActionListener() {
@@ -151,6 +159,15 @@ public class AdminFrame extends JFrame {
 				}
 			}
 
+		});
+		
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Manage Account");
+		mntmNewMenuItem_5.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/me.png")));
+		mnAboutUs.add(mntmNewMenuItem_5);
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manageAdminActionPerformed(e);
+			}
 		});
 		mntmLogOut.setIcon(new ImageIcon(AdminFrame.class.getResource("/image/reset.png")));
 		mnAboutUs.add(mntmLogOut);
@@ -181,6 +198,63 @@ public class AdminFrame extends JFrame {
 		label.setBounds(0, 0, 700, 432);
 		desktopPane.add(label);
 		contentPane.setLayout(gl_contentPane);
+	}
+	private void importRecommandBookActionPerformed(ActionEvent e) {
+		
+		ManageRecommandFrame managerRecommandFrm = new ManageRecommandFrame();
+		managerRecommandFrm.setLocation(10,10);
+		managerRecommandFrm.setVisible(true);
+		desktopPane.add(managerRecommandFrm);
+		desktopPane.setComponentZOrder(managerRecommandFrm, 0);
+	}
+
+	/*
+	 * Handle the manage reader account event
+	 */
+	private void manageReaderActionPerformed(ActionEvent e) {
+	
+		ManageReaderFrame manageReaderFrm = new ManageReaderFrame();
+		manageReaderFrm.setLocation(10,10);
+		manageReaderFrm.setVisible(true);
+		desktopPane.add(manageReaderFrm);
+		desktopPane.setComponentZOrder(manageReaderFrm, 0);
+	}
+	/*
+	 * Handle the manage admin account event
+	 */
+	private void manageAdminActionPerformed(ActionEvent e) {
+		
+		ManageAdminFrame manageAdminFrm = new ManageAdminFrame(loginUser);
+		manageAdminFrm.setLocation(10,10);
+		manageAdminFrm.setVisible(true);
+		desktopPane.add(manageAdminFrm);
+		desktopPane.setComponentZOrder(manageAdminFrm, 0);
+	}
+
+	/*
+	 * Handle the manage activity event
+	 */
+	private void manageActivityActionPerformed(ActionEvent e) {
+		
+		ManageActivityFrame manageActivityFrm = new ManageActivityFrame();
+		manageActivityFrm.setLocation(10,10);
+		manageActivityFrm.setVisible(true);
+		desktopPane.add(manageActivityFrm);
+		desktopPane.setComponentZOrder(manageActivityFrm, 0);
+		
+	}
+
+	/*
+	 * Handle the manage Book event
+	 */
+	private void manageBookActionPerformed(ActionEvent e) {
+		
+		ManageBookFrame manageBookFrm = new ManageBookFrame();
+		manageBookFrm.setLocation(10,10);
+		manageBookFrm.setVisible(true);
+		desktopPane.add(manageBookFrm);
+		desktopPane.setComponentZOrder(manageBookFrm, 0);
+		
 	}
 
 	/*

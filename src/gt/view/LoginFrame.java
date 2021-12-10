@@ -53,13 +53,7 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-//		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//定义格式，不显示毫秒
-//		Timestamp now= new Timestamp(System.currentTimeMillis());//获取系统当前时间
-//
-//		String str= df.format(now);
-//
-//		java.sql.Date dd = new java.sql.Date(System.currentTimeMillis());
-//		System.out.println(dd);
+
 		setBackground(UIManager.getColor("Button.disabledToolBarBorderBackground"));	
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/image/spl.png")));
 		setResizable(false);

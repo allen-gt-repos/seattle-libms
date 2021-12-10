@@ -136,13 +136,20 @@ public class AddNewUserFrame extends JInternalFrame {
 		int confirmResult = JOptionPane.showConfirmDialog(null, "Confirm to submit?");
 		if(confirmResult == 0)
 		{
+			Connection con = null;
+			Boolean usernameExisted = false;
 			//get the input
 			String username = this.UsernameTxt.getText();
 			String password = this.PasswordTxt.getText();
 			String name = this.NameTxt.getText();
 			String email = this.EmailTxt.getText();
 
-			
+			try {
+				con = dbUtil.getCon();
+				 usernameExisted = userDao.searchExistedUsername(con, UsernameTxt.getText());
+			}catch (Exception e1) {
+				// TODO: handle exception
+			}
 			// check the input
 			if(StringUtil.isEmpty(username)) {
 				
@@ -168,11 +175,14 @@ public class AddNewUserFrame extends JInternalFrame {
 				
 				JOptionPane.showMessageDialog(null, "Please input a valid Email address");
 				return;
+			}else if(usernameExisted ){
+				JOptionPane.showMessageDialog(null, "This username has been used by others, please try another one.");
+				return;
 			}
 			else {
 				
 				User newUser = new User(username,password,name,email,UserType,BorrowedCount);
-				Connection con = null;
+				
 				try 
 				{
 					con = dbUtil.getCon();

@@ -72,6 +72,37 @@ public class BookDao {
 			
 		}
 		PreparedStatement pstate = con.prepareStatement(sql.toString().replaceFirst("or", "where"));
+//		System.out.println(sql.toString());
+		return pstate.executeQuery();
+		
+	}
+	/*
+	 * handle the search book events
+	 * @return all results
+	 */
+	public ResultSet searchBook(Connection con, NewBook book) throws Exception{
+		
+		StringBuffer sql = new StringBuffer("select * from new_book where Rcmd_date in (select min(Rcmd_date) from new_book group by Title,Author,Isbn) ");
+		if (StringUtil.isNotEmpty(book.getTitle())) {
+			sql.append(" and (Title like '%"+book.getTitle()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(book.getAuthor())) {
+			sql.append(" or Author like '%"+book.getAuthor()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(book.getSubject())) {
+			sql.append(" or Subject like '%"+book.getSubject()+"%'");
+			
+		}
+		if (StringUtil.isNotEmpty(book.getIsbn())) {
+			sql.append(" or Isbn like '%"+book.getIsbn()+"%'");
+			
+		}
+		sql.append(")");
+		
+		String sqlStr = sql.toString();
+		PreparedStatement pstate = con.prepareStatement(sqlStr);
 		return pstate.executeQuery();
 		
 	}
@@ -79,14 +110,14 @@ public class BookDao {
 	 * Handle the get book info details event
 	 * 
 	 */
-	public BookLoc getBookInfo(Connection con, String TitleStr) throws Exception{
+	public BookLoc getBookInfo(Connection con, String IsbnStr) throws Exception{
 		
 		BookLoc resultBookLoc = null;
 		
 		String sql = "select book.*, location.* from book, location "
-				+ "where book.Title=? and book.Location_id=location.Location_id";
+				+ "where book.Isbn=? and book.Location_id=location.Location_id";
 		PreparedStatement pstate = con.prepareStatement(sql);
-		pstate.setString(1, TitleStr);
+		pstate.setString(1, IsbnStr);
 		
 		ResultSet rs = pstate.executeQuery();
 		if (rs.next()) {
@@ -102,7 +133,7 @@ public class BookDao {
 			
 			resultBookLoc.setFloor(rs.getInt("Floor"));
 			resultBookLoc.setHallName(rs.getString("Hall_name"));
-			resultBookLoc.setHallName(rs.getString("Hall_coordinate"));
+			resultBookLoc.setHallCoord(rs.getString("Hall_coordinate"));
 			resultBookLoc.setBookshelf(rs.getInt("Bookshelf"));
 			resultBookLoc.setBookShelfCoord(rs.getString("Bookshelf_coordinate"));
 			resultBookLoc.setColumn(rs.getInt("Column"));
@@ -110,7 +141,70 @@ public class BookDao {
 		}
 		return resultBookLoc;
 	}
-	
+	/*
+	 * Handle the get book info details event
+	 * 
+	 */
+	public BookLoc getBookInfo(Connection con, String IsbnStr, int bookId) throws Exception{
+		
+		BookLoc resultBookLoc = null;
+		
+		String sql = "select book.*, location.* from book, location "
+				+ "where (book.Isbn=? or book.Book_id=?) and book.Location_id=location.Location_id";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		pstate.setString(1, IsbnStr);
+		pstate.setInt(2, bookId);
+		
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			resultBookLoc = new BookLoc();
+			resultBookLoc.setBookId(rs.getInt("Book_id"));
+			resultBookLoc.setTitle(rs.getString("Title"));
+			resultBookLoc.setAuthor(rs.getString("Author"));
+			resultBookLoc.setIsbn(rs.getString("Isbn"));
+			resultBookLoc.setPublisher(rs.getString("Publisher"));
+			resultBookLoc.setPubYear(rs.getString("Pub_Year"));
+			resultBookLoc.setSubject(rs.getString("Subject"));
+			resultBookLoc.setAvailableCount(rs.getInt("Available_count"));
+			
+			resultBookLoc.setFloor(rs.getInt("Floor"));
+			resultBookLoc.setHallName(rs.getString("Hall_name"));
+			resultBookLoc.setHallCoord(rs.getString("Hall_coordinate"));
+			resultBookLoc.setBookshelf(rs.getInt("Bookshelf"));
+			resultBookLoc.setBookShelfCoord(rs.getString("Bookshelf_coordinate"));
+			resultBookLoc.setColumn(rs.getInt("Column"));
+			resultBookLoc.setLayer(rs.getInt("Layer"));
+		}
+		return resultBookLoc;
+	}
+	/*
+	 * Handle the get recommend book info details event
+	 * 
+	 */
+	public NewBook getBookInfo(Connection con, String IsbnStr, String TitleStr, String AuthorStr) throws Exception{
+		
+		NewBook resultBook = null;
+		
+		String sql = "select * from new_book where Rcmd_date in (select min(Rcmd_date) from new_book group by Title,Author,Isbn) "
+				+ "and Title=? and Isbn=? and Author=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		pstate.setString(1, TitleStr);
+		pstate.setString(2, IsbnStr);
+		pstate.setString(3, AuthorStr);
+		
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			resultBook = new NewBook();
+			
+			resultBook.setTitle(rs.getString("Title"));
+			resultBook.setAuthor(rs.getString("Author"));
+			resultBook.setIsbn(rs.getString("Isbn"));
+			resultBook.setPublisher(rs.getString("Publisher"));
+			resultBook.setPubYear(rs.getString("Pub_Year"));
+			resultBook.setSubject(rs.getString("Subject"));
+		}
+		return resultBook;
+	}
 	/*
 	 * Handle the get book info details event
 	 * 
@@ -161,7 +255,7 @@ public class BookDao {
 	 */
 	public int updateBook(Connection con, Book book) throws Exception{
 		
-		String sql = "update book set Title=?, Author=?, Isbn=?, Pub_year=?, Publisher=?, Subject=?, Avialable_count=?, Location_id=? where Book_id=?";
+		String sql = "update book set Title=?, Author=?, Isbn=?, Pub_year=?, Publisher=?, Subject=?, Available_count=?, Location_id=? where Book_id=?";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
 		pstate.setString(1, book.getTitle());
@@ -191,6 +285,7 @@ public class BookDao {
 	
 		return pstate.executeUpdate();
 	}
+
 	/*
 	 * Update the book item
 	 * @return the number of book items that have been updated
@@ -303,11 +398,11 @@ public class BookDao {
 	public int deleteRecommendBook(Connection con , NewBook newBook) throws Exception{
 		
 		
-		String sql = "delete from new_book where User_id=? and Isbn=?";
+		String sql = "delete from new_book where Title=?";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
-		pstate.setString(1, newBook.getUserId());
-		pstate.setString(2, newBook.getIsbn());
+		pstate.setString(1, newBook.getTitle());
+
 		
 		return pstate.executeUpdate();
 		
@@ -393,5 +488,46 @@ public class BookDao {
 		}
 		
 	}
-	
+	/*
+	 * Check if the input location info is valid, return the location_id if existed or return 0 
+	 */
+	public int checkValidLocation(Connection con, BookLoc loc) throws Exception{
+		
+		String sql = "select location.Location_id from location "
+				+ "where Floor=? and Hall_name=? and Bookshelf=? and location.Column=? and location.Layer=?";
+		
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setInt(1, loc.getFloor());
+		pstate.setString(2, loc.getHallName());
+		pstate.setInt(3, loc.getBookshelf());
+		pstate.setInt(4, loc.getColumn());
+		pstate.setInt(5, loc.getLayer());
+		ResultSet rs = pstate.executeQuery();
+		if (!rs.next()) {
+			return 0;
+		}else {
+			return rs.getInt("Location_id");
+		}
+		
+	}
+	 
+	/*
+	 * Check if all book copys have been returned before delete a book item
+	 */
+	public boolean checkAllReturned(Connection con, Book book) throws Exception{
+		
+		String sql = "select * from borrow_return where borrow_return.Book_id=? and Return_date is null";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setInt(1, book.getBookId());
+		ResultSet rs = pstate.executeQuery();
+		if (rs.next()) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 }

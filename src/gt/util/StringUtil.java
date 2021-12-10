@@ -101,4 +101,36 @@ public class StringUtil {
     	
     	return coord;
     }
+    /**
+     * Check the string is a digit sequence or not
+     * 
+     */
+    public static boolean isNumeric(String str)
+    {
+    	for (int i = 0; i < str.length(); i++)
+    	{
+    		
+    		if (!Character.isDigit(str.charAt(i)))
+    		{
+    			return false;
+    		}
+    	}
+    	return true;
+    }
+
+    /**
+     * Check the string is a valid date format or  not
+     */
+    public static boolean isValidDate(String str) {
+    	
+    	final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			dateFormat.parse(str);
+//			System.out.println(dateFormat.parse(str));
+		} catch (Exception e) {
+			return false;
+
+		}
+		return true;
+	}
 }

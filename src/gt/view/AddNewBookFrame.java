@@ -56,7 +56,7 @@ public class AddNewBookFrame extends JInternalFrame {
 		getContentPane().setBackground(Color.WHITE);
 		setNormalBounds(new Rectangle(9, 9, 0, 0));
 		getContentPane().setFont(new Font("Dialog", Font.BOLD, 12));
-		setBounds(100, 100, 680, 400);
+		setBounds(100, 100, 681, 400);
 		
 		JLabel lblNewLabel = new JLabel("Title*:");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);

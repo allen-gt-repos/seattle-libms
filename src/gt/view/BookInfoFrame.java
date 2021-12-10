@@ -25,6 +25,8 @@ import gt.dao.UserDao;
 import gt.model.BookLoc;
 import gt.model.User;
 import gt.util.DBUtil;
+import gt.util.LcmSubscribeUtil;
+import gt.util.StringUtil;
 
 public class BookInfoFrame extends JFrame {
 
@@ -41,6 +43,7 @@ public class BookInfoFrame extends JFrame {
 	
 	private BookLoc bookLoc = null;
 	private User currentUser = null;
+ 
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +51,7 @@ public class BookInfoFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookInfoFrame frame = new BookInfoFrame(null,null);
+					BookInfoFrame frame = new BookInfoFrame(null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,12 +63,14 @@ public class BookInfoFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BookInfoFrame(BookLoc bookLocInput, User userInput) {
+	public BookInfoFrame(BookLoc bookLocInput, User userInput, LcmSubscribeUtil lcm) {
 		
 		// set book location user
 		this.bookLoc = bookLocInput;
 		this.currentUser = userInput;
 		
+		// set the destination for navigation end condition
+		lcm.setDestination(StringUtil.getCoordinate(bookLoc.getBookShelfCoord()));
 		
 		setResizable(false);
 		
@@ -95,7 +100,15 @@ public class BookInfoFrame extends JFrame {
 		btnNavigation.setIcon(new ImageIcon(BookInfoFrame.class.getResource("/image/about.png")));
 		btnNavigation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				navigateActionPerformed(e);
+				int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
+				if (answer == 0) {
+					// set the navigation begin flag
+					lcm.setNavFlag();
+					navigateActionPerformed(e);
+				}
+				else {
+					return;
+				}
 			}
 		});
 		btnNavigation.setBounds(25, 335, 130, 25);
@@ -134,6 +147,7 @@ public class BookInfoFrame extends JFrame {
 		AuthorTxt.setHorizontalAlignment(SwingConstants.LEFT);
 		AuthorTxt.setBounds(112, 59, 280, 19);
 		AuthorTxt.setBorder(null);
+		
 		AuthorTxt.setText(bookLoc.getAuthor());
 		contentPane.add(AuthorTxt);
 		AuthorTxt.setColumns(10);
@@ -284,16 +298,13 @@ public class BookInfoFrame extends JFrame {
 
 	// handle the navigation event
 	private void navigateActionPerformed(ActionEvent e) {
+		
 		// prepare for the navigation
-		int answer = JOptionPane.showConfirmDialog(null,"Sure to ask the robot to take you there?" );
-		if (answer == 0) {
-			Navigation navigation = new Navigation(bookLoc);
-			navigation.setLocationRelativeTo(null);
-			navigation.setVisible(true);
-			navigation.publishBookCoord();
-		}else {
-			return;
-		}
+		NavigationDialog navigationDialog = new NavigationDialog(bookLoc);
+		navigationDialog.setLocationRelativeTo(null);
+		navigationDialog.setVisible(true);
+		navigationDialog.publishBookCoord();
+		
 		
 	}
 	// handle the go back event

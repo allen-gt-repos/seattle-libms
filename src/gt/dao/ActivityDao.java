@@ -1,12 +1,12 @@
 package gt.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import gt.model.Activity;
 import gt.model.ActivityLoc;
-import gt.model.BookLoc;
 import gt.util.StringUtil;
 
 /**
@@ -66,13 +66,14 @@ public class ActivityDao {
 	 * Get activity more info
 	 * 
 	 */
-	public ActivityLoc getActivityInfo(Connection con, String NameStr) throws Exception{
+	public ActivityLoc getActivityInfo(Connection con, String NameStr, String DateStr) throws Exception{
 		
 		ActivityLoc resultActivityLoc = null;
 		String sql = "select activity.*, location.* from activity, location "
-				+ "where activity.Activity_name=? and activity.Location_id=location.Location_id";
+				+ "where activity.Activity_name=? and Begin_date=? and activity.Location_id=location.Location_id";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		pstate.setString(1, NameStr);
+		pstate.setDate(2, Date.valueOf(DateStr));
 		
 		ResultSet rs = pstate.executeQuery();
 		if (rs.next()) {
@@ -93,11 +94,64 @@ public class ActivityDao {
 			resultActivityLoc.setLayer(rs.getInt("Layer"));
 		}
 		else {
-			System.out.println("no result error");
+			System.out.println("[ActivityDao] No result error.");
 		}
 		
 		return resultActivityLoc;
 		
+	}
+	
+	/*
+	 * delete the activity record
+	 */
+	public int deleteActivity(Connection con, Activity activity) throws Exception{
+		
+		
+		String sql = "delete from activity where Activity_name=? and Begin_date=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		pstate.setString(1, activity.getActivityName());
+		pstate.setDate(2, activity.getBeginDate());
+		
+		
+		return pstate.executeUpdate();
+	}
+	
+	/*
+	 * update the activity info
+	 */
+	public int updateActivity(Connection con, Activity activity, ActivityLoc activityOld) throws Exception{
+		
+		String sql = "update activity set Activity_name=?, Location_id=?, Begin_date=?, Begin_time=?, End_time=?, Organizer=? where Activity_name=? and Begin_date=?";
+		PreparedStatement pstate = con.prepareStatement(sql);
+		pstate.setString(1, activity.getActivityName());
+		pstate.setDate(3, activity.getBeginDate());
+		pstate.setInt(2, activity.getLocationId());
+		pstate.setTime(4, activity.getBeginTime());
+		pstate.setTime(5, activity.getEndTime());
+		pstate.setString(6, activity.getOrganizer());
+		pstate.setString(7, activityOld.getActivityName());
+		pstate.setDate(8, activityOld.getBeginDate());
+		
+		return pstate.executeUpdate();
+	}
+	
+	/*
+	 * Check if the input location info is valid, return the location_id if existed or return 0 
+	 */
+	public int checkValidLocation(Connection con, ActivityLoc loc) throws Exception{
+		
+		String sql = "select location.Location_id from location where Floor=? and Hall_name=? ";
+		
+		PreparedStatement pstate = con.prepareStatement(sql);
+		
+		pstate.setInt(1, loc.getFloor());
+		pstate.setString(2, loc.getHallName());
+		ResultSet rs = pstate.executeQuery();
+		if (!rs.next()) {
+			return 0;
+		}else {
+			return rs.getInt("Location_id");
+		}
 		
 	}
 }
