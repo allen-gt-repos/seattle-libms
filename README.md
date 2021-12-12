@@ -29,7 +29,7 @@ To implement this navigation functionality, you must implement [Seattle_turtlebo
 
    If you use the Eclispe to open the project, you can run `/Seattle-LibMS/src/gt/view/LoginFrame.java` directly.\
    Or you can export the whole project to an executable jar file, project launch entry is also the `LoginFrame.java`.
-   I also provide a runable jar under `/Seattle-LibMS/bin` folder.
+   I also provide a runable jar named `spl.jar` under `/Seattle-LibMS/lib` folder.
 
 * Login the account
    Here, I provide a reader account and a administor account for you to test the project:
