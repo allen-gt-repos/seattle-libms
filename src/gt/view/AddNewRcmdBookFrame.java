@@ -67,8 +67,7 @@ public class AddNewRcmdBookFrame extends JFrame {
 		this.currentUser = user;
 		
 		setTitle("Recommend New Book");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setBounds(100, 100, 615, 346);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		

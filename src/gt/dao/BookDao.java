@@ -359,7 +359,6 @@ public class BookDao {
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
 		pstate.setString(1, user.getUserId());
-//		pstate.setString(2, user.getUserId());
 		return pstate.executeQuery(); 
 		
 	}
@@ -367,12 +366,12 @@ public class BookDao {
 	/*
 	 * get recommend book details
 	 */
-	public NewBook getRecommendBookInfo(Connection con, String title, User user) throws Exception{
+	public NewBook getRecommendBookInfo(Connection con, String isbn, User user) throws Exception{
 		
-		String sql = "select * from new_book where Title=? and User_id=?";
+		String sql = "select * from new_book where Isbn=? and User_id=?";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
-		pstate.setString(1, title);
+		pstate.setString(1, isbn);
 		pstate.setString(2, user.getUserId());
 		ResultSet rs = pstate.executeQuery(); 
 		NewBook resultBook = null;
@@ -398,11 +397,11 @@ public class BookDao {
 	public int deleteRecommendBook(Connection con , NewBook newBook) throws Exception{
 		
 		
-		String sql = "delete from new_book where Title=?";
+		String sql = "delete from new_book where Isbn=? and User_id=?";
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
-		pstate.setString(1, newBook.getTitle());
-
+		pstate.setString(1, newBook.getIsbn());
+		pstate.setString(2, newBook.getUserId());
 		
 		return pstate.executeUpdate();
 		
@@ -438,7 +437,6 @@ public class BookDao {
 		PreparedStatement pstate = con.prepareStatement(sql);
 		
 		pstate.setString(1, newBook.getUserId());
-//		pstate.setString(2, newBook.getTitle());
 		pstate.setString(2, newBook.getIsbn());
 		ResultSet rs = pstate.executeQuery();
 		if (rs.next()) {

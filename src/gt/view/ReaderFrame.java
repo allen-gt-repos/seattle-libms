@@ -274,12 +274,12 @@ public class ReaderFrame extends JFrame {
 	private void recommendTableMousePressed(MouseEvent e) {
 
 		int rowIndex = RecommendTable.getSelectedRow();
-		String FirstColTxt = (String)RecommendTable.getValueAt(rowIndex, 1);
+		String ThirdColTxt = (String)RecommendTable.getValueAt(rowIndex, 2);
 		Connection con = null;
 		
 		try {
 			con = dbUtil.getCon();
-			NewBook newBook= bookDao.getRecommendBookInfo(con, FirstColTxt, currentUser);
+			NewBook newBook= bookDao.getRecommendBookInfo(con, ThirdColTxt, currentUser);
 			NewBookInfoFrame newBookInfoFrm = new NewBookInfoFrame(newBook);
 			newBookInfoFrm.setLocationRelativeTo(null);
 			newBookInfoFrm.setVisible(true);
@@ -867,12 +867,12 @@ public class ReaderFrame extends JFrame {
 	private void historyTableMousePressed(MouseEvent e) {
 		
 		int rowIndex = HistoryTable.getSelectedRow();
-		String FirstColTxt = (String)HistoryTable.getValueAt(rowIndex, 1);
+		String SecondColTxt = (String)HistoryTable.getValueAt(rowIndex, 1);
 		Connection con = null;
 		
 		try {
 			con = dbUtil.getCon();
-			BookLog bookLog = bookDao.getBorrowInfo(con,FirstColTxt);
+			BookLog bookLog = bookDao.getBorrowInfo(con,SecondColTxt);
 			BookReturnFrame bookReturnFrm = new BookReturnFrame(bookLog,currentUser);
 			bookReturnFrm.setLocationRelativeTo(null);
 			bookReturnFrm.setVisible(true);
