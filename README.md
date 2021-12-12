@@ -21,12 +21,13 @@ To implement this navigation functionality, you must implement [Seattle_turtlebo
    Go to the `/Seattle-LibMS/src/gt/util/DBUtil.java`, change the database Username and Password to yours. Current User=root, Password=666. 
 * Check and use suitable JDBC drive
 
-   I use JavaSE1.8 and MySQL-5.7 on my PC, if your java-version or mysql-version is different, please go to `/lib` folder to check if the mysql-java connector is suitable.
+   I use JavaSE1.8 and MySQL-5.7 on my PC, if your java-version or mysql-version is different, please go to `/Seattle-LibMS/lib` folder to check if the mysql-java connector is suitable for your environment.
    
 * Build and run the project
 
    If you use the Eclispe to open the project, you can run `/Seattle-LibMS/src/gt/view/LoginFrame.java` directly.\
    Or you can export the whole project to an executable jar file, project launch entry is also the `LoginFrame.java`.
+   I also provide a runable jar under `/Seattle-LibMS/bin` folder.
 
 * Login the account
    Here, I provide a reader account and a administor account for you to test the project:
