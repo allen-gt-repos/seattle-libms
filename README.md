@@ -1,7 +1,7 @@
 # Seattle-Library-Management-System
 
-**Author:** Wang, Yinuo
-**Last Update:** 2021.12.12
+**Author:** Wang, Yinuo\
+**Last Update:** 2021.12.12\
 **Email:** ywang3781@gatech.edu
 
 ## Introduction
@@ -41,6 +41,11 @@ To implement this navigation functionality, you must implement [Seattle_turtlebo
    ```
 
 ## Dependency
+* Ubuntu 18
+
+   This project was developed and test only on Ubuntu 18.0 system, but it should be good on other system.
+   Because the robot part can only be run on Linux, if you want to realize all project functionalities, please implement this application also on a linux system.
+   
 * MySQL (mysql-5.7)
 
 * JDBC
