@@ -6,7 +6,7 @@
 
 ## Introduction
 
-<img src="https://user-images.githubusercontent.com/69251304/145726243-9aefe150-7a63-40b4-9bd8-e2a470db3a87.png" width="450" height="320"/> <img src="https://user-images.githubusercontent.com/69251304/145726254-c10b7707-8586-4e98-b10f-0898de7a44fc.png" width="450" height="320"/><br/>
+<img src="https://user-images.githubusercontent.com/69251304/145726243-9aefe150-7a63-40b4-9bd8-e2a470db3a87.png" width="420" height="320"/> <img src="https://user-images.githubusercontent.com/69251304/145726254-c10b7707-8586-4e98-b10f-0898de7a44fc.png" width="420" height="320"/><br/>
 
 This is a library management system application developed with the [Seattle Public Library’s Collection Inventory Dataset](https://data.seattle.gov/Community/Library-Collection-Inventory/6vkj-f5xf) to realize basic library functionality for both reader and library administrators, including login/create/manage account, borrow/return book, recommend new book, etc.
 
