@@ -15,7 +15,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * User password verification page
+ * @author Wang, Yinuo
+ *
+ */
 public class VerifyAccountDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

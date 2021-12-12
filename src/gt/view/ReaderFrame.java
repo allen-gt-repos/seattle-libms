@@ -53,7 +53,11 @@ import gt.util.DBUtil;
 import gt.util.LcmSubscribeUtil;
 import gt.util.StringUtil;
 
-
+/**
+ * The main page for reader account
+ * @author Wang, Yinuo
+ *
+ */
 public class ReaderFrame extends JFrame {
 
 	private JPanel search;
@@ -146,7 +150,6 @@ public class ReaderFrame extends JFrame {
 		bookColumn.add("Book Title");
 		bookColumn.add("ISBN");
 		bookColumn.add("Author");
-//		bookColumn.add("Expected Return Date");
 		
 		RecommendTable = new JTable(0,4);
 		RecommendTable.setSize(650, 350);
@@ -174,7 +177,6 @@ public class ReaderFrame extends JFrame {
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(JLabel.CENTER);
 		RecommendTable.setDefaultRenderer(Object.class, dtcr);
-//		bookshelf.add(HistoryTable);
 		scrollPane3.setViewportView(RecommendTable);
 		
 		// fill the table with already borrowed book
@@ -228,7 +230,7 @@ public class ReaderFrame extends JFrame {
 	 * fill the recommend book table
 	 */
 	private void fillRecommendTable() {
-		// TODO 自动生成的方法存根
+
 		DefaultTableModel dtm = (DefaultTableModel) RecommendTable.getModel();
 		dtm.setRowCount(0);
 		Connection con = null;
@@ -259,7 +261,6 @@ public class ReaderFrame extends JFrame {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 				}
 				
@@ -267,8 +268,11 @@ public class ReaderFrame extends JFrame {
 		}
 	}
 
+	/*
+	 * Handle the mouse press event on the recommend book table
+	 */
 	private void recommendTableMousePressed(MouseEvent e) {
-		// TODO 自动生成的方法存根
+
 		int rowIndex = RecommendTable.getSelectedRow();
 		String FirstColTxt = (String)RecommendTable.getValueAt(rowIndex, 1);
 		Connection con = null;
@@ -346,7 +350,6 @@ public class ReaderFrame extends JFrame {
 		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 		dtcr.setHorizontalAlignment(JLabel.CENTER);
 		HistoryTable.setDefaultRenderer(Object.class, dtcr);
-//		bookshelf.add(HistoryTable);
 		scrollPane2.setViewportView(HistoryTable);
 		
 		// fill the table with already borrowed book
@@ -425,17 +428,12 @@ public class ReaderFrame extends JFrame {
 		bookColumn.add("Book Title");
 		bookColumn.add("ISBN");
 		bookColumn.add("Author");
-//		bookColumn.add("Location");
-//		bookColumn.add("More Info");
 		
 		Vector activityColumn = new Vector<>();
 		activityColumn.add("Activity");
 		activityColumn.add("Organizer");
 		activityColumn.add("Date");
-//		activityColumn.add("Location");
-//		activityColumn.add("More Info");
 		
-
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(48, 164, 613, 247);
 		scrollPane.setBackground(Color.WHITE);
@@ -666,7 +664,6 @@ public class ReaderFrame extends JFrame {
 			tabPane.setSelectedIndex(3); 
 			
 		} catch (Exception e1) {
-			// TODO 自动生成的 catch 块
 			e1.printStackTrace();
 		} finally {
 			try {
@@ -675,7 +672,6 @@ public class ReaderFrame extends JFrame {
 				}
 					
 			} catch (SQLException e1) {
-				// TODO 自动生成的 catch 块
 				e1.printStackTrace();
 			}
 		}
@@ -857,13 +853,11 @@ public class ReaderFrame extends JFrame {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 				}
 				
 			}
 		}
-		
 		
 	}
 	/*
@@ -896,9 +890,7 @@ public class ReaderFrame extends JFrame {
 		}
 	}
 		
-		
-	
-	/**
+	/*
 	 * handle the mouse pressed event on table row
 	 * @param e
 	 */
@@ -945,58 +937,4 @@ public class ReaderFrame extends JFrame {
 			}
 		}
 	}
-}
-
-
-
-
-/**
- * The class handle the more info button in table
- * @author Wang, Yinuo
- *
- */
-class MyRender extends AbstractCellEditor implements TableCellRenderer,ActionListener, TableCellEditor{
-	 
-    private static final long serialVersionUID = 1L;
-    private JButton button =null;
-    private long buttonId = 0;
-    public MyRender(){
-        button = new JButton();
-        button.setIcon(new ImageIcon(LoginFrame.class.getResource("/image/me.png")));
-        button.setBackground(new Color(255, 255, 255));
-        button.addActionListener(this);
-    }
- 
-@Override
-    public Object getCellEditorValue() {
-        // TODO Auto-generated method stub
-        return null;
-    }
- 
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        // TODO Auto-generated method stub
-        return button;
-    }
- 
-@Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-//        JOptionPane.showMessageDialog(null, "渲染器学期", "消息", JOptionPane.OK_OPTION);
-         showMoreInfo();
-    }
- 
-private void showMoreInfo() {
-	// TODO 自动生成的方法存根
-	
-}
-
-@Override
-    public Component getTableCellEditorComponent(JTable table, Object value,
-            boolean isSelected, int row, int column) {
-        // TODO Auto-generated method stub
-        return button;
-    }
-     
 }

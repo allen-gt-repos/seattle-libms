@@ -1,7 +1,9 @@
 package gt.model;
 
 import java.sql.Date;
-
+/**
+ * New_book entity relation model
+ */
 public class NewBook {
 	
 	private String userId;
@@ -16,7 +18,6 @@ public class NewBook {
 	// default constructor
 	public NewBook() {
 		super();
-		// TODO 自动生成的构造函数存根
 	}
 	// parameter constructor
 	public NewBook(String userId, String title, String author, String publisher, String isbn, String pubYear,

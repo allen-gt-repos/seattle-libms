@@ -20,7 +20,11 @@ import javax.swing.border.EmptyBorder;
 import gt.model.ActivityLoc;
 import gt.util.LcmSubscribeUtil;
 import gt.util.StringUtil;
-
+/**
+ * Show more info about activity page
+ * @author Wang, Yinuo
+ *
+ */
 public class ActivityInfoFrame extends JFrame {
 
 	private JPanel contentPane;

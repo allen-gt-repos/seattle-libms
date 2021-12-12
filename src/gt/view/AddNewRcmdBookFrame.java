@@ -22,7 +22,11 @@ import gt.model.NewBook;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Reader add new recommend book
+ * @author Wang, Yinuo
+ *
+ */
 public class AddNewRcmdBookFrame extends JFrame {
 
 	private JTextField TitleTxt;

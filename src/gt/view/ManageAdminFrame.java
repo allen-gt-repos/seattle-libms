@@ -20,7 +20,11 @@ import gt.dao.UserDao;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin manage admin account page
+ * @author Wang, Yinuo
+ *
+ */
 public class ManageAdminFrame extends JInternalFrame {
 	private JTextField emailTxt;
 	private JTextField nameTxt;

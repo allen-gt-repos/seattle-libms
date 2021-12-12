@@ -25,7 +25,11 @@ import gt.model.Book;
 import gt.model.BookLoc;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin manage activity page
+ * @author Wang, Yinuo
+ *
+ */
 public class ManageActivityFrame extends JInternalFrame {
 	private JTextField searchTxt;
 	private JTextField searchDateTxt;
@@ -316,7 +320,6 @@ public class ManageActivityFrame extends JInternalFrame {
 					try {
 						con.close();
 					} catch (SQLException e1) {
-						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
 				}

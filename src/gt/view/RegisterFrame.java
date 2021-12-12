@@ -20,7 +20,11 @@ import gt.dao.UserDao;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * The  account registration page
+ * @author Wang, Yinuo
+ *
+ */
 public class RegisterFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -238,6 +242,7 @@ public class RegisterFrame extends JFrame {
 		// reset all blanks
 		this.resetValue();
 	}
+	
 	/*
 	 * reset all text frame
 	 */

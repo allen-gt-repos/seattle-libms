@@ -29,7 +29,11 @@ import gt.model.BookLoc;
 import gt.model.NewBook;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin manage recommend book page
+ * @author Wang, Yinuo
+ *
+ */
 public class ManageRecommandFrame extends JInternalFrame {
 	private JTextField searchTxt;
 	private JScrollPane scrollPane;

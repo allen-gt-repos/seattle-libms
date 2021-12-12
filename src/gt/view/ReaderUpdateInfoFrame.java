@@ -19,7 +19,11 @@ import gt.util.StringUtil;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
-
+/**
+ * Reader manage account info page
+ * @author Wang, Yinuo
+ *
+ */
 public class ReaderUpdateInfoFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -74,7 +78,6 @@ public class ReaderUpdateInfoFrame extends JFrame {
 				Connection con =null;
 				try {
 					con = dbUtil.getCon();
-//					int existedNum = ;
 					
 					if (StringUtil.isEmpty(UsernameTxt.getText())) {
 						JOptionPane.showMessageDialog(null, "Username cannot be empty.");

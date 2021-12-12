@@ -17,7 +17,11 @@ import gt.dao.UserDao;
 import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin create new user account page
+ * @author Wang, Yinuo
+ *
+ */
 public class AddNewUserFrame extends JInternalFrame {
 	
 	private JTextField UsernameTxt;

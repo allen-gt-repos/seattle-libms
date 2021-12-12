@@ -39,7 +39,7 @@ public class ActivityDao {
 	}
 
 	/*
-	 * handle activity search event
+	 * Handle activity search event
 	 * 
 	 */
 	public ResultSet searchActivity(Connection con, Activity activity) throws Exception {
@@ -53,10 +53,6 @@ public class ActivityDao {
 			sql.append(" or Organizer like '%"+activity.getOrganizer()+"%'");
 			
 		}
-//		if (StringUtil.isNotEmpty(String.valueOf(activity.getLocationId()))) {
-//			sql.append(" or Activity_name like '%"+activity.getActivityName()+"%'");
-//			
-//		}
 		PreparedStatement pstate = con.prepareStatement(sql.toString().replaceFirst("or", "where"));
 		return pstate.executeQuery();
 		

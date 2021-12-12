@@ -22,7 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-
+/**
+ * Change password page
+ */
 public class NewPasswordFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -178,10 +180,5 @@ public class NewPasswordFrame extends JFrame {
 		contentPane.add(btnCancel);
 	}
 
-	protected void submitNewPasswordActionPerformed(ActionEvent e) {
-		// TODO 自动生成的方法存根
-		
-
-	}
 
 }

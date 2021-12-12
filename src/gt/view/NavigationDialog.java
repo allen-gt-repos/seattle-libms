@@ -25,7 +25,11 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-
+/**
+ * Navigation page for robot-application communication 
+ * @author Wang, Yinuo
+ *
+ */
 public class NavigationDialog extends JFrame {
 
 	private JPanel contentPane;
@@ -55,7 +59,6 @@ public class NavigationDialog extends JFrame {
 	 */
 	public NavigationDialog() throws HeadlessException {
 		super();
-		// TODO 自动生成的构造函数存根
 	}
 
 
@@ -172,23 +175,14 @@ public class NavigationDialog extends JFrame {
 		lcm_pub_t.start();
 	}
 	
-	
 	/*
-	 * Subscribe the robot state through lcm
+	 * End the navigation and close destination publish thread
 	 */
-	public void subscribeRobotState() {
-		
-//		lcm_sub_t = new LcmSubscribeUtil("RobotState",this);
-//		lcm_sub_t.start();
-		
-	}
-	
 	public void endNav() throws InterruptedException {
 		if (!lcm_pub_t.isInterrupted()) {
 			lcm_pub_t.interrupt();
 		}
 		JOptionPane.showMessageDialog(null,"Robot has reach the destination!");
-//		lcm_sub_t.interrupt();
 		dispose();
 		
 	}

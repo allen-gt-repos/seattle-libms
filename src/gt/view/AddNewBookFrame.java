@@ -19,7 +19,11 @@ import gt.util.DBUtil;
 import gt.util.StringUtil;
 import javax.swing.SwingConstants;
 import java.awt.Color;
-
+/**
+ * Admin create new book page
+ * @author Wang, Yinuo
+ *
+ */
 public class AddNewBookFrame extends JInternalFrame {
 	private JTextField TitleTxt;
 	private JTextField AuthorTxt;

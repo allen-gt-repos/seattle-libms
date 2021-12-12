@@ -26,7 +26,11 @@ import gt.model.Book;
 import gt.model.BookLoc;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin manage book page
+ * @author Wang, Yinuo
+ *
+ */
 public class ManageBookFrame extends JInternalFrame {
 	private JTextField searchTxt;
 	private JTextField titleTxt;
@@ -285,6 +289,9 @@ public class ManageBookFrame extends JInternalFrame {
 		}
 	}
 
+	/*
+	 * Handle the update book info event
+	 */
 	private void updateBookActionPerformed(ActionEvent e) {
 		
 		Connection con = null;
@@ -357,7 +364,6 @@ public class ManageBookFrame extends JInternalFrame {
 					try {
 						con.close();
 					} catch (SQLException e1) {
-						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
 				}
@@ -366,6 +372,9 @@ public class ManageBookFrame extends JInternalFrame {
 		}
 	}
 
+	/*
+	 * Handle the admin search book event
+	 */
 	private void searchActionPerformed(ActionEvent e) {
 
 		Connection con = null;

@@ -20,7 +20,11 @@ import gt.dao.ActivityDao;
 import gt.model.Activity;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
-
+/**
+ * Admin create new activity page
+ * @author Wang, Yinuo
+ *
+ */
 public class AddNewActFrame extends JInternalFrame {
 	private JTextField ActivityTxt;
 	private JTextField OrganizerTxt;
@@ -91,23 +95,17 @@ public class AddNewActFrame extends JInternalFrame {
 		LocationTxt.setBounds(323, 129, 149, 19);
 		getContentPane().add(LocationTxt);
 		
-//		BeginDateTxt = new JTextField();
 		BeginDateTxt.setForeground(Color.BLACK);
-//		BeginDateTxt.setText("YYYY-MM-DD");
 		BeginDateTxt.setColumns(10);
 		BeginDateTxt.setBounds(323, 172, 149, 19);
 		getContentPane().add(BeginDateTxt);
 		
-//		BeginTimeTxt = new JTextField();
 		BeginTimeTxt.setForeground(Color.BLACK);
-//		BeginTimeTxt.setText("HH:MM:SS");
 		BeginTimeTxt.setColumns(10);
 		BeginTimeTxt.setBounds(323, 214, 70, 19);
 		getContentPane().add(BeginTimeTxt);
 		
-//		EndTimeTxt = new JTextField();
 		EndTimeTxt.setForeground(Color.BLACK);
-//		EndTimeTxt.setText("HH:MM:SS");
 		EndTimeTxt.setColumns(10);
 		EndTimeTxt.setBounds(405, 214, 67, 19);
 		getContentPane().add(EndTimeTxt);
@@ -164,9 +162,6 @@ public class AddNewActFrame extends JInternalFrame {
 			String endTimeStr = this.EndTimeTxt.getText();
 			Date begDate;
 			Time begTime, endTime;
-
-	
-//			System.out.println(Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())));
 			
 			// check the input
 			if(StringUtil.isEmpty(activityName)) {

@@ -12,7 +12,11 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-
+/**
+ * Show more info about admin account page
+ * @author Wang, Yinuo
+ *
+ */
 public class AdminInfoFrame extends JInternalFrame {
 	 
 

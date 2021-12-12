@@ -26,6 +26,11 @@ import gt.util.DBUtil;
 import gt.util.StringUtil;
 import javax.swing.SwingConstants;
 
+/**
+ * Admin import new book from recommend book page
+ * @author Wang, Yinuo
+ *
+ */
 public class ImportNewBookFrame extends JFrame {
 	private final JLabel TitleTxt = new JLabel("");
 	private JTextField floorTxt;
@@ -212,6 +217,9 @@ public class ImportNewBookFrame extends JFrame {
 
 	}
 
+	/*
+	 * Handle the import new book to library event
+	 */
 	private void importActionPerformed(ActionEvent e) {
 		Connection con = null;
 		int location_id = 0;

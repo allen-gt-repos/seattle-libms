@@ -23,7 +23,11 @@ import javax.swing.JDesktopPane;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 
-
+/**
+ * The main page for admin user
+ * @author Wang, Yinuo
+ *
+ */
 public class AdminFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -307,8 +311,6 @@ public class AdminFrame extends JFrame {
 	}
 
 	/*
-	 * handle the log out button
-	 * @param e
 	 */
 	private void logoutActionPerformed(ActionEvent e) {
 		// dispose the old frame

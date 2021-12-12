@@ -24,7 +24,11 @@ import gt.dao.UserDao;
 import gt.model.NewBook;
 import gt.model.User;
 import gt.util.DBUtil;
-
+/**
+ * Show info about new recommend book
+ * @author Wang, Yinuo
+ *
+ */
 public class NewBookInfoFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -38,7 +42,6 @@ public class NewBookInfoFrame extends JFrame {
 	private DBUtil dbUtil = new DBUtil();
 	
 	private NewBook newBook = null;
-//	private User currentUser = null;
 	private JTextField RcmdDateTxt;
 
 	/**
@@ -189,6 +192,9 @@ public class NewBookInfoFrame extends JFrame {
 		contentPane.add(RcmdDateTxt);
 	}
 
+	/*
+	 * Handle the delete recommend book 
+	 */
 	protected void deleteActionPerformed(ActionEvent e) {
 		
 		Connection con = null;

@@ -24,7 +24,7 @@ public class testlcm extends Thread implements LCMSubscriber {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO 自动生成的方法存根
+
 		testlcm t1 = new testlcm("RobotState");
 		t1.start();
 //		run("RobotState");

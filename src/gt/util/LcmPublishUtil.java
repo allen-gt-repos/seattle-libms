@@ -8,7 +8,7 @@ import lcm.lcm.*;
 import gt.util.lcmtypes.*;
 /**
  * @author Wang, Yinuo
- *
+ * The LCM message publish class
  */
 public class LcmPublishUtil extends Thread {
 
@@ -20,7 +20,6 @@ public class LcmPublishUtil extends Thread {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO 自动生成的方法存根
 		float coord[] = {0.00f,0.11f};
 		LcmPublishUtil t1 = new LcmPublishUtil(coord);
 		t1.start();
@@ -29,17 +28,17 @@ public class LcmPublishUtil extends Thread {
 	
 	public LcmPublishUtil() {
 		super();
-		// TODO 自动生成的构造函数存根
 	}
-
 
 	public LcmPublishUtil(float[] pvState) {
 		super();
 		this.pvState = pvState;
 	}
 
+	/**
+	 * The thread start function for LCM
+	 */
 	public void run() {
-//		System.out.println("in run function");
 		
 			lcm = LCM.getSingleton();
 			while (true) {
@@ -47,7 +46,6 @@ public class LcmPublishUtil extends Thread {
 					try {
 						sendMessage(pvState, "Destination");
 					} catch (IOException e) {
-						// TODO 自动生成的 catch 块
 						e.printStackTrace();
 					}
 			         Thread.sleep(10);
@@ -57,14 +55,9 @@ public class LcmPublishUtil extends Thread {
 				}
 			}
 	}
-//	 public void start() {
-//		 System.out.println("in start function");
-//		 Thread t = new Thread(this);
-//		 t.start();
-//	 }
-//	 
+	 
 	 /**
-	  * 
+	  * callback function for publish thread
 	  * @param coordFloat
 	  */
 	public static void sendMessage(float[] coordFloat, String channel) throws IOException 

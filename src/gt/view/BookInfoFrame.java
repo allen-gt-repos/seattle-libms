@@ -27,7 +27,11 @@ import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.LcmSubscribeUtil;
 import gt.util.StringUtil;
-
+/**
+ * Show more info about book page
+ * @author Wang, Yinuo
+ *
+ */
 public class BookInfoFrame extends JFrame {
 
 	private JPanel contentPane;

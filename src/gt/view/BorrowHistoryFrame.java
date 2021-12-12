@@ -30,7 +30,11 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * show book borrow history page
+ * @author Wang, Yinuo
+ *
+ */
 public class BorrowHistoryFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -155,7 +159,6 @@ public class BorrowHistoryFrame extends JFrame {
 				try {
 					con.close();
 				} catch (SQLException e) {
-					// TODO 自动生成的 catch 块
 					e.printStackTrace();
 				}
 				

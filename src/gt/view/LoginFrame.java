@@ -22,12 +22,16 @@ import gt.model.User;
 import gt.util.DBUtil;
 import gt.util.StringUtil;
 import javax.swing.JPasswordField;
-
+/**
+ * User login page
+ * 
+ * @author Wang, Yinuo
+ *
+ */
 public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userNameTxt;
-//	private JTextField passwordTxt;
 	private DBUtil dbUtil = new DBUtil();
 	private UserDao userDao = new UserDao();
 	private JPasswordField passwordField;
@@ -162,7 +166,6 @@ public class LoginFrame extends JFrame {
 			User resultusUser = userDao.login(con,user);
 			if(resultusUser!=null)
 			{
-//				JOptionPane.showMessageDialog(null, "Successfully login!");
 				dispose();
 				if(resultusUser.getUserType() == 2){
 									
@@ -191,12 +194,11 @@ public class LoginFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "Failed to log in, please check and try again.");
 			userNameTxt.setText("");
 			passwordField.setText("");
-//			e1.printStackTrace();
+
 		}finally {
 			
 			try {
 				dbUtil.closeCon(con);
-//				dispose();
 			} catch (Exception e1) {
 				
 				e1.printStackTrace();

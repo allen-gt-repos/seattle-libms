@@ -28,7 +28,11 @@ import gt.dao.UserDao;
 import gt.model.BookLog;
 import gt.model.User;
 import gt.util.DBUtil;
-
+/**
+ * Book return page
+ * @author Wang, Yinuo
+ *
+ */
 public class BookReturnFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -47,6 +51,7 @@ public class BookReturnFrame extends JFrame {
 	
 	private JTextField DateTxt;
 	private JTextField ExpectedDateTxt;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -263,7 +268,9 @@ public class BookReturnFrame extends JFrame {
 		}
 
 	}
-	// handle the go back event
+	/*
+	 *  handle the go back event
+	 */
 	private void gobackActionPerformed(ActionEvent e) {
 		// close the window
 		dispose();
